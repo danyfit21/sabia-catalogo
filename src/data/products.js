@@ -33,6 +33,13 @@ export const waLink = (producto) => {
   return base + encodeURIComponent(msg);
 };
 
+// ============================================================================
+//  CATÁLOGO "PARA LLEVAR" — productos físicos que se elaboran y se venden
+//  para consumir en casa (barras, granola, untables, bebidas embotelladas).
+//  Esto NO incluye lo que se prepara y sirve únicamente en el local — eso
+//  vive en la sección "MENÚ DEL LOCAL" más abajo.
+// ============================================================================
+
 // --- Categorías (orden + etiqueta del filtro) ------------------------------
 export const categorias = [
   { id: 'todos', label: 'Todo el catálogo' },
@@ -40,12 +47,11 @@ export const categorias = [
   { id: 'granola', label: 'Granola' },
   { id: 'untables', label: 'Untables' },
   { id: 'bebidas', label: 'Bebidas' },
-  { id: 'bowls', label: 'SaBïa Bowls' },
-  { id: 'tostadas', label: 'Tostadas' },
+  { id: 'postres', label: 'Postres' },
 ];
 
-// --- Productos --------------------------------------------------------------
-// precio en USD (placeholder editable). img relativa a /public.
+// --- Productos para llevar ---------------------------------------------------
+// precio en USD. img relativa a /public.
 export const productos = [
   // A) BARRAS DE CEREAL ARTESANALES
   {
@@ -153,81 +159,16 @@ export const productos = [
     img: '/img/kombucha.jpg',
     badge: 'Probiótico',
   },
-  {
-    id: 'smoothie-verde',
-    categoria: 'bebidas',
-    nombre: 'Smoothie verde',
-    desc: 'Frutas y vegetales frescos licuados al momento. Pura vitalidad.',
-    precio: 4.0,
-    img: '/img/smoothie-verde.jpg',
-    badge: 'Recién hecho — menú de local',
-  },
 
-  // E) SABïA BOWLS (menú de local — precios por confirmar)
+  // E) POSTRES
   {
-    id: 'bowl-verde',
-    categoria: 'bowls',
-    nombre: 'Bowl Verde',
-    desc: 'Kiwi, mango, granola, coco y chía sobre base verde.',
-    precio: 6.5,
-    img: '/img/bowl-verde.jpg',
-    badge: 'Menú de local',
-  },
-  {
-    id: 'bowl-acai-power',
-    categoria: 'bowls',
-    nombre: 'Bowl Açaí Power',
-    desc: 'Granada, chocolate, coco y almendras. Energía intensa.',
-    precio: 6.9,
-    img: '/img/bowl-acai-power.jpg',
-    badge: 'Menú de local',
-  },
-  {
-    id: 'bowl-clasico',
-    categoria: 'bowls',
-    nombre: 'Bowl Clásico',
-    desc: 'Banana, frutilla, chocolate y granola. El favorito de siempre.',
-    precio: 6.0,
-    img: '/img/bowl-clasico.jpg',
-    badge: 'Menú de local',
-  },
-
-  // F) TOSTADAS ARTESANALES (menú de local — precios por confirmar)
-  {
-    id: 'tostada-frutos-rojos',
-    categoria: 'tostadas',
-    nombre: 'Tostada de Frutos Rojos',
-    desc: 'Pan artesanal con mantequilla de maní, frutilla y arándanos.',
-    precio: 5.0,
-    img: '/img/tostada-frutos-rojos.jpg',
-    badge: 'Menú de local',
-  },
-  {
-    id: 'tostada-aguacate-huevo',
-    categoria: 'tostadas',
-    nombre: 'Tostada de Aguacate & Huevo',
-    desc: 'Aguacate, huevo y ajonjolí negro sobre pan integral.',
-    precio: 5.5,
-    img: '/img/tostada-aguacate-huevo.jpg',
-    badge: 'Menú de local',
-  },
-  {
-    id: 'tostada-tomates-asados',
-    categoria: 'tostadas',
-    nombre: 'Tostada de Tomates Asados',
-    desc: 'Tomates asados con quesos maduros y albahaca fresca.',
-    precio: 5.5,
-    img: '/img/tostada-tomates-asados.jpg',
-    badge: 'Menú de local',
-  },
-  {
-    id: 'tostada-queso-hongos',
-    categoria: 'tostadas',
-    nombre: 'Tostada de Queso & Hongos',
-    desc: 'Crema de queso, hongos salteados y ajonjolí blanco.',
-    precio: 5.5,
-    img: '/img/tostada-queso-hongos.jpg',
-    badge: 'Menú de local',
+    id: 'parfait',
+    categoria: 'postres',
+    nombre: 'Parfait',
+    desc: 'Capas de yogurt, granola y fruta fresca. Dulce y ligero.',
+    precio: 3.0,
+    img: '/img/granola-bolsa.jpg',
+    badge: 'Foto próximamente',
   },
 ];
 
@@ -265,3 +206,184 @@ export const saboresBarras = [
   { nombre: 'Cacao al 70%', color: '#6E2251' },
   { nombre: 'Ajonjolí con Coco', color: '#B07B4F' },
 ];
+
+// ============================================================================
+//  MENÚ DEL LOCAL — solo se prepara y se sirve dentro de SaBïa Bowls.
+//  No son productos "para llevar" empacados; por eso viven separados del
+//  catálogo de arriba. Precios y recetas tomados del menú físico del local.
+// ============================================================================
+
+// --- Bowls (tamaño Mediano = 3 toppings · Grande = 5 toppings) -------------
+export const menuBowls = [
+  {
+    id: 'bowl-green-detox',
+    nombre: 'Green Detox Bowl',
+    desc: 'Espinaca, banana, yogurt de kéfir, kiwi, aguacate, semillas de chía.',
+    precioMediano: 5.0,
+    precioGrande: 6.0,
+    img: '/img/bowl-verde.jpg',
+  },
+  {
+    id: 'bowl-tropical-mango',
+    nombre: 'Tropical Mango Bowl',
+    desc: 'Mango (por temporada), yogurt de kéfir, piña, coco, banana, miel (opcional).',
+    precioMediano: 4.5,
+    precioGrande: 5.5,
+    img: '/img/bowl-clasico.jpg',
+    fotoPendiente: true,
+  },
+  {
+    id: 'bowl-choco-peanut',
+    nombre: 'Choco Peanut Bowl',
+    desc: 'Banana, mantequilla de maní, cacao en polvo, leche de almendras.',
+    precioMediano: 5.0,
+    precioGrande: 6.0,
+    img: '/img/bowl-acai-power.jpg',
+    fotoPendiente: true,
+  },
+  {
+    id: 'bowl-berris-lover',
+    nombre: 'Berris Lover Bowl',
+    desc: 'Mix de moras, arándanos, fresa, banana, yogurt de kéfir, semillas de chía, miel (opcional).',
+    precioMediano: 4.5,
+    precioGrande: 5.5,
+    img: '/img/bowl-acai-power.jpg',
+    fotoPendiente: true,
+  },
+  {
+    id: 'bowl-sunrise',
+    nombre: 'Sunrise Bowl',
+    desc: 'Maracuyá, fresas, banana, yogurt de kéfir.',
+    precioMediano: 4.5,
+    precioGrande: 5.5,
+    img: '/img/bowl-clasico.jpg',
+    fotoPendiente: true,
+  },
+];
+
+// Arma tu propio bowl
+export const armaTuBowl = {
+  mediano: { label: 'Mediano', desc: '1 base + 3 toppings' },
+  grande: { label: 'Grande', desc: '1 base + 5 toppings' },
+  basesDesc: 'Escoge tres frutas + banana + miel (opcional).',
+  precioExtra: 1.5,
+};
+
+// --- Smoothies (receta fija — Mediano $3.00 · Grande $3.50 para todos) -----
+export const preciosSmoothieFijo = { mediano: 3.0, grande: 3.5 };
+
+export const menuSmoothies = [
+  {
+    id: 'smoothie-green-citrus',
+    nombre: 'Green Citrus',
+    desc: 'Piña, manzana verde, toronja, sábila, espinaca, pepino.',
+  },
+  {
+    id: 'smoothie-tropical-dream',
+    nombre: 'Tropical Dream',
+    desc: 'Yogurt de kéfir, mango, piña, banana.',
+  },
+  {
+    id: 'smoothie-very-berry',
+    nombre: 'Very Berry',
+    desc: 'Fresas, arándanos, mora, banana, yogurt de kéfir, miel.',
+  },
+  {
+    id: 'smoothie-stand-up',
+    nombre: 'Stand-Up',
+    desc: 'Yogurt de kéfir, banana, fresas, avena, semillas de chía.',
+  },
+  {
+    id: 'smoothie-playa',
+    nombre: 'Playa',
+    desc: 'Mango, fresas, piña, jugo de naranja, miel.',
+  },
+  {
+    id: 'smoothie-spinach-crush',
+    nombre: 'Spinach Crush',
+    desc: 'Espinaca, aguacate, piña, mango, banana, yogurt de kéfir.',
+  },
+  {
+    id: 'smoothie-digestiva-vida',
+    nombre: 'Digestiva Vida',
+    desc: 'Papaya, manzana, yogurt de kéfir, avena, banana.',
+  },
+];
+
+// Arma tu propio smoothie
+export const armaTuSmoothie = {
+  mediano: { label: 'Mediano', ingredientes: 7, precio: 3.75 },
+  grande: { label: 'Grande', ingredientes: 9, precio: 4.0 },
+  frutas: [
+    'Piña',
+    'Banana',
+    'Mix de frutos rojos',
+    'Papaya',
+    'Mango',
+    'Melón',
+    'Maracuyá',
+    'Naranjilla',
+    'Aguacate',
+  ],
+  verduras: ['Espinaca', 'Kale', 'Apio'],
+  otros: [
+    'Jengibre',
+    'Semillas de chía',
+    'Semillas de linaza',
+    'Cacao en polvo',
+    'Mantequilla de maní',
+    'Yogurt de Kéfir',
+    'Miel',
+    'Dátiles',
+  ],
+};
+
+// --- Tostadas con pan de masa madre -----------------------------------------
+export const menuTostadas = [
+  {
+    id: 'toast-avocado',
+    nombre: 'Avocado Toast',
+    desc: 'Pan de masa madre, aguacate, huevo, semillas de ajonjolí.',
+    precio: 4.0,
+    img: '/img/tostada-aguacate-huevo.jpg',
+  },
+  {
+    id: 'toast-peanut',
+    nombre: 'Peanut Toast',
+    desc: 'Pan de masa madre, miel, mantequilla de maní, semillas de chía, acompañada de fresas y banana.',
+    precio: 4.0,
+    img: '/img/tostada-frutos-rojos.jpg',
+    fotoPendiente: true,
+  },
+  {
+    id: 'toast-mushrooms',
+    nombre: 'Mushrooms Toast',
+    desc: 'Pan de masa madre, tomates hidratados, hongos salteados, mix de quesos maduros con hierbas.',
+    precio: 4.5,
+    img: '/img/tostada-queso-hongos.jpg',
+  },
+  {
+    id: 'toast-tomatoe',
+    nombre: 'Tomatoe Toast',
+    desc: 'Pan de masa madre, mix de tomates cherries, vinagre balsámico, albahaca, queso.',
+    precio: 4.5,
+    img: '/img/tostada-tomates-asados.jpg',
+  },
+];
+
+// --- Cafés calientes y fríos -------------------------------------------------
+export const menuCafes = {
+  calientes: [
+    { nombre: 'Cappuccino', precio: 3.5 },
+    { nombre: 'Mocca', precio: 3.5 },
+    { nombre: 'Americano', precio: 2.5 },
+    { nombre: 'Espresso', precio: 2.0 },
+    { nombre: 'Macchiato', precio: 2.5 },
+  ],
+  frios: [
+    { nombre: 'Brown Sugar Latte', precio: 3.5 },
+    { nombre: 'Honey-Cinnamon Latte', precio: 3.5 },
+    { nombre: 'Iced Coffee', precio: 3.5 },
+    { nombre: 'Iced Latte', precio: 3.5 },
+  ],
+};

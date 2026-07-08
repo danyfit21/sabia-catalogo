@@ -5,8 +5,8 @@ import { waLink } from '../data/products'
 
 const links = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#catalogo', label: 'Productos' },
-  { href: '#bowls', label: 'Bowls' },
+  { href: '#catalogo', label: 'Para llevar' },
+  { href: '#menu-local', label: 'Menú del local' },
   { href: '#nosotros', label: 'Nosotros' },
   { href: '#visitanos', label: 'Visítanos' },
 ]

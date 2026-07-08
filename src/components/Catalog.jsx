@@ -19,14 +19,15 @@ export default function Catalog() {
     <section id="catalogo" className="relative bg-crema-soft py-20 sm:py-28">
       <div className="container-sb">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Nuestro catálogo</Eyebrow>
+          <Eyebrow>Para llevar</Eyebrow>
           <h2 className="heading-display mt-5 text-4xl text-vino sm:text-5xl">
             Sabores que nutren,
             <br className="hidden sm:block" /> antojos que se cumplen
           </h2>
           <p className="mt-4 text-carbon/65">
-            Filtra por categoría y arma tu pedido. Cada producto es artesanal,
-            natural y hecho con amor en Cuenca.
+            Productos empacados para llevar a casa. Filtra por categoría y
+            arma tu pedido — cada uno es artesanal, natural y hecho con amor
+            en Cuenca.
           </p>
         </Reveal>
 

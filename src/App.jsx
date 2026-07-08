@@ -5,7 +5,7 @@ import Hero from './components/Hero'
 import ValuesStrip from './components/ValuesStrip'
 import Catalog from './components/Catalog'
 import BarsSection from './components/BarsSection'
-import BowlsSection from './components/BowlsSection'
+import MenuSection from './components/MenuSection'
 import StorySection from './components/StorySection'
 import VisitSection from './components/VisitSection'
 import FinalContact from './components/FinalContact'
@@ -55,7 +55,7 @@ export default function App() {
         <Catalog />
         <SeedDivider from="#F7F1E3" to="#6E2251" />
         <BarsSection />
-        <BowlsSection />
+        <MenuSection />
         <SeedDivider from="#803E8E" to="#F7F1E3" />
         <StorySection />
         <VisitSection />

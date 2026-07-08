@@ -46,7 +46,7 @@ export default function BarsSection() {
               <span className="text-marigold">100% naturales</span>
             </h2>
             <p className="mt-4 max-w-md text-crema/75">
-              Cuatro sabores artesanales, cero culpa. Avena, semillas y frutos
+              Tres sabores artesanales, cero culpa. Avena, semillas y frutos
               que te dan energía real para cualquier momento del día.
             </p>
           </Reveal>
