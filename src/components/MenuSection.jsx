@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Reveal } from './Decor'
-import { WhatsApp } from './Icons'
+import { ArrowRight, WhatsApp } from './Icons'
 import {
   armaTuBowl,
   armaTuSmoothie,
@@ -13,11 +12,38 @@ import {
   waLink,
 } from '../data/products'
 
-const tabs = [
-  { id: 'bowls', label: 'Bowls' },
-  { id: 'smoothies', label: 'Smoothies' },
-  { id: 'tostadas', label: 'Tostadas & Café' },
+// Navegación rápida: salta a cada bloque del menú (útil sobre todo en móvil).
+const jumps = [
+  { href: '#menu-bowls', label: 'Bowls' },
+  { href: '#menu-smoothies', label: 'Smoothies' },
+  { href: '#menu-tostadas', label: 'Tostadas & Café' },
 ]
+
+// Encabezado decorado de cada sub-bloque del menú.
+function BlockHeader({ eyebrow, titulo, children }) {
+  return (
+    <Reveal className="text-center">
+      <span className="font-script text-3xl text-marigold">{eyebrow}</span>
+      <h3 className="heading-display mt-1 text-3xl text-crema sm:text-4xl">{titulo}</h3>
+      {children && <p className="mx-auto mt-3 max-w-xl text-crema/80">{children}</p>}
+    </Reveal>
+  )
+}
+
+// Botón que lleva al siguiente bloque (o al final, a otra sección).
+function NextButton({ href, label }) {
+  return (
+    <div className="mt-10 flex justify-center">
+      <a
+        href={href}
+        className="inline-flex items-center gap-2 rounded-full border border-crema/30 bg-white/5 px-6 py-3 font-display font-500 text-crema transition-all duration-300 hover:bg-white/15"
+      >
+        {label}
+        <ArrowRight className="h-4 w-4" />
+      </a>
+    </div>
+  )
+}
 
 function PricePill({ label, price }) {
   return (
@@ -27,79 +53,81 @@ function PricePill({ label, price }) {
   )
 }
 
-function BowlsTab() {
+function BowlsBlock() {
   return (
-    <>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {menuBowls.map((b, i) => (
-          <motion.article
-            key={b.id}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ delay: i * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="group overflow-hidden rounded-3xl bg-crema shadow-2xl"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <img
-                src={b.img}
-                alt={`${b.nombre} — ${b.desc}`}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              {b.fotoPendiente && (
-                <span className="absolute left-3 top-3 rounded-full bg-carbon/70 px-2.5 py-1 text-[11px] text-crema">
-                  Foto próximamente
-                </span>
-              )}
-            </div>
-            <div className="p-5">
-              <h3 className="font-display text-lg font-600 text-vino">{b.nombre}</h3>
-              <p className="mt-1.5 text-sm leading-snug text-carbon/65">{b.desc}</p>
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
-                  Mediano ${b.precioMediano.toFixed(2)}
-                </span>
-                <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
-                  Grande ${b.precioGrande.toFixed(2)}
-                </span>
-                <a
-                  href={waLink(b.nombre)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ml-auto grid h-9 w-9 place-items-center rounded-full bg-vino text-crema transition-transform hover:scale-110"
-                  aria-label={`Pedir ${b.nombre}`}
-                >
-                  <WhatsApp className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          </motion.article>
-        ))}
-      </div>
-
-      <Reveal delay={0.1}>
-        <div className="mt-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
-          <h3 className="font-display text-xl font-600 text-crema">Arma tu propio bowl</h3>
-          <div className="mt-3 flex flex-wrap gap-3">
-            <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-              {armaTuBowl.mediano.label}: {armaTuBowl.mediano.desc}
-            </span>
-            <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-              {armaTuBowl.grande.label}: {armaTuBowl.grande.desc}
-            </span>
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {menuBowls.map((b, i) => (
+        <motion.article
+          key={b.id}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ delay: i * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="group overflow-hidden rounded-3xl bg-crema shadow-2xl"
+        >
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <img
+              src={b.img}
+              alt={`${b.nombre} — ${b.desc}`}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            {b.fotoPendiente && (
+              <span className="absolute left-3 top-3 rounded-full bg-carbon/70 px-2.5 py-1 text-[11px] text-crema">
+                Foto próximamente
+              </span>
+            )}
           </div>
-          <p className="mt-4 text-sm text-crema/80">
-            Bases: {armaTuBowl.basesDesc}{' '}
-            <b className="text-marigold">+${armaTuBowl.precioExtra.toFixed(2)}</b>
-          </p>
-        </div>
-      </Reveal>
-    </>
+          <div className="p-5">
+            <h4 className="font-display text-lg font-600 text-vino">{b.nombre}</h4>
+            <p className="mt-1.5 text-sm leading-snug text-carbon/65">{b.desc}</p>
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
+                Mediano ${b.precioMediano.toFixed(2)}
+              </span>
+              <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
+                Grande ${b.precioGrande.toFixed(2)}
+              </span>
+              <a
+                href={waLink(b.nombre)}
+                target="_blank"
+                rel="noreferrer"
+                className="ml-auto grid h-9 w-9 place-items-center rounded-full bg-vino text-crema transition-transform hover:scale-110"
+                aria-label={`Pedir ${b.nombre}`}
+              >
+                <WhatsApp className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </motion.article>
+      ))}
+    </div>
   )
 }
 
-function SmoothiesTab() {
+function ArmaBowl() {
+  return (
+    <Reveal delay={0.1}>
+      <div className="mt-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
+        <h4 className="font-display text-xl font-600 text-crema">Arma tu propio bowl</h4>
+        <div className="mt-3 flex flex-wrap gap-3">
+          <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
+            {armaTuBowl.mediano.label}: {armaTuBowl.mediano.desc}
+          </span>
+          <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
+            {armaTuBowl.grande.label}: {armaTuBowl.grande.desc}
+          </span>
+        </div>
+        <p className="mt-4 text-sm text-crema/80">
+          Bases: {armaTuBowl.basesDesc}{' '}
+          <b className="text-marigold">+${armaTuBowl.precioExtra.toFixed(2)}</b>
+        </p>
+      </div>
+    </Reveal>
+  )
+}
+
+function SmoothiesBlock() {
   return (
     <>
       <Reveal>
@@ -141,7 +169,7 @@ function SmoothiesTab() {
 
       <Reveal delay={0.1}>
         <div className="mt-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
-          <h3 className="font-display text-xl font-600 text-crema">Arma tu propio smoothie</h3>
+          <h4 className="font-display text-xl font-600 text-crema">Arma tu propio smoothie</h4>
           <div className="mt-3 flex flex-wrap gap-3">
             <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
               {armaTuSmoothie.mediano.label}: {armaTuSmoothie.mediano.ingredientes} ingredientes · $
@@ -175,7 +203,7 @@ function SmoothiesTab() {
   )
 }
 
-function TostadasTab() {
+function TostadasBlock() {
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-2">
@@ -203,7 +231,7 @@ function TostadasTab() {
             </div>
             <div className="flex flex-1 flex-col justify-between p-5">
               <div>
-                <h3 className="font-display text-lg font-600 text-vino">{t.nombre}</h3>
+                <h4 className="font-display text-lg font-600 text-vino">{t.nombre}</h4>
                 <p className="mt-1.5 text-sm leading-snug text-carbon/65">{t.desc}</p>
               </div>
               <div className="mt-4 flex items-center justify-between">
@@ -226,7 +254,7 @@ function TostadasTab() {
       <Reveal delay={0.1}>
         <div className="mt-6 grid gap-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:grid-cols-2 sm:p-8">
           <div>
-            <h3 className="font-display text-lg font-600 text-marigold">Cafés calientes</h3>
+            <h4 className="font-display text-lg font-600 text-marigold">Cafés calientes</h4>
             <ul className="mt-3 space-y-2">
               {menuCafes.calientes.map((c) => (
                 <li key={c.nombre} className="flex items-center justify-between text-sm text-crema/85">
@@ -237,7 +265,7 @@ function TostadasTab() {
             </ul>
           </div>
           <div>
-            <h3 className="font-display text-lg font-600 text-marigold">Cafés fríos</h3>
+            <h4 className="font-display text-lg font-600 text-marigold">Cafés fríos</h4>
             <ul className="mt-3 space-y-2">
               {menuCafes.frios.map((c) => (
                 <li key={c.nombre} className="flex items-center justify-between text-sm text-crema/85">
@@ -254,16 +282,14 @@ function TostadasTab() {
 }
 
 export default function MenuSection() {
-  const [tab, setTab] = useState('bowls')
-
   return (
     <section
       id="menu-local"
       className="relative overflow-hidden bg-gradient-to-b from-violeta-600 to-violeta py-20 sm:py-28"
     >
       <div className="grain absolute inset-0" aria-hidden="true" />
-      <div className="absolute -left-24 top-1/3 h-80 w-80 rounded-full bg-marigold/25 blur-3xl" aria-hidden="true" />
-      <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-vino/40 blur-3xl" aria-hidden="true" />
+      <div className="absolute -left-24 top-1/4 h-80 w-80 rounded-full bg-marigold/25 blur-3xl" aria-hidden="true" />
+      <div className="absolute -right-24 bottom-1/4 h-80 w-80 rounded-full bg-vino/40 blur-3xl" aria-hidden="true" />
 
       <div className="container-sb relative z-10">
         <Reveal className="mx-auto max-w-2xl text-center">
@@ -282,33 +308,55 @@ export default function MenuSection() {
           </p>
         </Reveal>
 
-        {/* Tabs */}
+        {/* Navegación rápida por el menú */}
         <Reveal delay={0.1}>
-          <div className="mt-10 flex flex-wrap justify-center gap-2.5">
-            {tabs.map((t) => {
-              const on = tab === t.id
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
-                  className={`chip border ${
-                    on
-                      ? 'border-marigold bg-marigold text-vino-900 shadow-card'
-                      : 'border-crema/25 bg-white/5 text-crema hover:bg-white/10'
-                  }`}
-                  aria-pressed={on}
-                >
-                  {t.label}
-                </button>
-              )
-            })}
+          <div className="mt-9 flex flex-wrap justify-center gap-2.5">
+            {jumps.map((j) => (
+              <a
+                key={j.href}
+                href={j.href}
+                className="chip border border-crema/25 bg-white/5 text-crema transition-colors hover:bg-white/15"
+              >
+                {j.label}
+              </a>
+            ))}
           </div>
         </Reveal>
 
-        <div className="mt-12">
-          {tab === 'bowls' && <BowlsTab />}
-          {tab === 'smoothies' && <SmoothiesTab />}
-          {tab === 'tostadas' && <TostadasTab />}
+        {/* BLOQUE 1 · BOWLS */}
+        <div id="menu-bowls" className="scroll-mt-24 pt-16">
+          <BlockHeader eyebrow="cucharada tras cucharada" titulo="Smoothie Bowls">
+            Una base de frutas sin añadidos donde combinas nutrientes y sabores.
+          </BlockHeader>
+          <div className="mt-10">
+            <BowlsBlock />
+            <ArmaBowl />
+          </div>
+          <NextButton href="#menu-smoothies" label="Ver smoothies" />
+        </div>
+
+        {/* BLOQUE 2 · SMOOTHIES */}
+        <div id="menu-smoothies" className="scroll-mt-24 pt-20">
+          <BlockHeader eyebrow="pura vitalidad en un vaso" titulo="Smoothies">
+            Frutas y vegetales frescos licuados al momento. Elige tu receta o
+            arma la tuya.
+          </BlockHeader>
+          <div className="mt-10">
+            <SmoothiesBlock />
+          </div>
+          <NextButton href="#menu-tostadas" label="Ver tostadas & café" />
+        </div>
+
+        {/* BLOQUE 3 · TOSTADAS & CAFÉ */}
+        <div id="menu-tostadas" className="scroll-mt-24 pt-20">
+          <BlockHeader eyebrow="antojitos para acompañar" titulo="Tostadas & Café">
+            Pan de masa madre recién tostado y café de especialidad, caliente o
+            frío.
+          </BlockHeader>
+          <div className="mt-10">
+            <TostadasBlock />
+          </div>
+          <NextButton href="#menu-local" label="Volver al inicio del menú" />
         </div>
       </div>
     </section>
