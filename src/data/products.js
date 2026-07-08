@@ -277,36 +277,45 @@ export const menuSmoothies = [
     id: 'smoothie-green-citrus',
     nombre: 'Green Citrus',
     desc: 'Piña, manzana verde, toronja, sábila, espinaca, pepino.',
+    img: '/img/smoothie-green-citrus.jpg',
   },
   {
     id: 'smoothie-tropical-dream',
     nombre: 'Tropical Dream',
     desc: 'Yogurt de kéfir, mango, piña, banana.',
+    img: '/img/smoothie-tropical-dream.jpg',
   },
   {
     id: 'smoothie-very-berry',
     nombre: 'Very Berry',
     desc: 'Fresas, arándanos, mora, banana, yogurt de kéfir, miel.',
+    img: '/img/smoothie-very-berry.jpg',
   },
   {
     id: 'smoothie-stand-up',
     nombre: 'Stand-Up',
     desc: 'Yogurt de kéfir, banana, fresas, avena, semillas de chía.',
+    img: '/img/smoothie-stand-up.jpg',
   },
   {
     id: 'smoothie-playa',
     nombre: 'Playa',
     desc: 'Mango, fresas, piña, jugo de naranja, miel.',
+    img: '/img/smoothie-playa.jpg',
   },
   {
     id: 'smoothie-spinach-crush',
     nombre: 'Spinach Crush',
     desc: 'Espinaca, aguacate, piña, mango, banana, yogurt de kéfir.',
+    img: '/img/smoothie-green-citrus.jpg',
+    fotoPendiente: true,
   },
   {
     id: 'smoothie-digestiva-vida',
     nombre: 'Digestiva Vida',
     desc: 'Papaya, manzana, yogurt de kéfir, avena, banana.',
+    img: '/img/smoothie-stand-up.jpg',
+    fotoPendiente: true,
   },
 ];
 

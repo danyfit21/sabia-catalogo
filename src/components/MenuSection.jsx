@@ -148,9 +148,22 @@ function SmoothiesBlock() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ delay: i * 0.06, duration: 0.5 }}
-            className="flex items-start justify-between gap-3 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 backdrop-blur"
+            className="flex items-center gap-4 rounded-2xl bg-white/5 p-3 ring-1 ring-white/10 backdrop-blur"
           >
-            <div>
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+              <img
+                src={s.img}
+                alt={`${s.nombre} — ${s.desc}`}
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+              {s.fotoPendiente && (
+                <span className="absolute inset-x-0 bottom-0 bg-carbon/70 py-0.5 text-center text-[9px] leading-tight text-crema">
+                  Foto próx.
+                </span>
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
               <h4 className="font-display font-600 text-crema">{s.nombre}</h4>
               <p className="mt-1 text-sm leading-snug text-crema/65">{s.desc}</p>
             </div>
