@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Reveal } from './Decor'
-import { ArrowRight, WhatsApp } from './Icons'
+import { ArrowRight, Sparkle, WhatsApp } from './Icons'
 import {
   armaTuBowl,
   armaTuSmoothie,
@@ -9,6 +10,7 @@ import {
   menuSmoothies,
   menuTostadas,
   preciosSmoothieFijo,
+  site,
   waLink,
 } from '../data/products'
 
@@ -140,79 +142,206 @@ function SmoothiesBlock() {
         </div>
       </Reveal>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {menuSmoothies.map((s, i) => (
-          <motion.div
+          <motion.article
             key={s.id}
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 26 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ delay: i * 0.06, duration: 0.5 }}
-            className="flex items-center gap-4 rounded-2xl bg-white/5 p-3 ring-1 ring-white/10 backdrop-blur"
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ delay: i * 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="group flex flex-col overflow-hidden rounded-3xl bg-crema shadow-2xl"
           >
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl">
+            {/* Foto — enfoca la parte superior del vaso (los toppings) */}
+            <div className="relative aspect-[4/5] overflow-hidden">
               <img
                 src={s.img}
                 alt={`${s.nombre} — ${s.desc}`}
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              {s.fotoPendiente && (
-                <span className="absolute inset-x-0 bottom-0 bg-carbon/70 py-0.5 text-center text-[9px] leading-tight text-crema">
-                  Foto próx.
-                </span>
-              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-vino-900/80 via-vino-900/10 to-transparent" />
+              <span className="absolute right-3 top-3 rounded-full bg-marigold px-3 py-1 font-display text-sm font-700 text-vino-900 shadow">
+                ${preciosSmoothieFijo.mediano.toFixed(2)}
+              </span>
+              <h4 className="absolute inset-x-4 bottom-3 font-display text-2xl font-700 leading-tight text-crema drop-shadow-lg">
+                {s.nombre}
+              </h4>
             </div>
-            <div className="min-w-0 flex-1">
-              <h4 className="font-display font-600 text-crema">{s.nombre}</h4>
-              <p className="mt-1 text-sm leading-snug text-crema/65">{s.desc}</p>
+
+            <div className="flex flex-1 flex-col p-5">
+              <p className="flex-1 text-sm leading-relaxed text-carbon/70">{s.desc}</p>
+              <a
+                href={waLink(s.nombre)}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-vino py-3 font-display font-600 text-crema shadow-card transition-all duration-300 hover:bg-marigold hover:text-vino-900"
+              >
+                <WhatsApp className="h-5 w-5" />
+                Quiero uno
+              </a>
             </div>
-            <a
-              href={waLink(s.nombre)}
-              target="_blank"
-              rel="noreferrer"
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-marigold text-vino-900 transition-transform hover:scale-110"
-              aria-label={`Pedir ${s.nombre}`}
-            >
-              <WhatsApp className="h-4 w-4" />
-            </a>
-          </motion.div>
+          </motion.article>
         ))}
       </div>
 
       <Reveal delay={0.1}>
-        <div className="mt-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
-          <h4 className="font-display text-xl font-600 text-crema">Arma tu propio smoothie</h4>
-          <div className="mt-3 flex flex-wrap gap-3">
-            <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-              {armaTuSmoothie.mediano.label}: {armaTuSmoothie.mediano.ingredientes} ingredientes · $
-              {armaTuSmoothie.mediano.precio.toFixed(2)}
-            </span>
-            <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-              {armaTuSmoothie.grande.label}: {armaTuSmoothie.grande.ingredientes} ingredientes · $
-              {armaTuSmoothie.grande.precio.toFixed(2)}
-            </span>
-          </div>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-3">
-            {[
-              { titulo: 'Frutas', items: armaTuSmoothie.frutas },
-              { titulo: 'Verduras', items: armaTuSmoothie.verduras },
-              { titulo: 'Otros', items: armaTuSmoothie.otros },
-            ].map((grupo) => (
-              <div key={grupo.titulo}>
-                <p className="font-display text-sm font-600 text-marigold">{grupo.titulo}</p>
-                <ul className="mt-2 space-y-1 text-sm text-crema/75">
-                  {grupo.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SmoothieBuilder />
       </Reveal>
     </>
+  )
+}
+
+// --- Constructor interactivo: arma tu propio smoothie ----------------------
+function SmoothieBuilder() {
+  const [sizeKey, setSizeKey] = useState('mediano')
+  const [selected, setSelected] = useState([])
+
+  const size = armaTuSmoothie[sizeKey]
+  const max = size.ingredientes
+  const full = selected.length >= max
+  const canOrder = selected.length > 0
+
+  const grupos = [
+    { titulo: 'Frutas', items: armaTuSmoothie.frutas },
+    { titulo: 'Verduras', items: armaTuSmoothie.verduras },
+    { titulo: 'Otros', items: armaTuSmoothie.otros },
+  ]
+
+  const toggle = (item) => {
+    setSelected((prev) => {
+      if (prev.includes(item)) return prev.filter((x) => x !== item)
+      if (prev.length >= max) return prev
+      return [...prev, item]
+    })
+  }
+
+  const changeSize = (key) => {
+    setSizeKey(key)
+    setSelected((prev) => prev.slice(0, armaTuSmoothie[key].ingredientes))
+  }
+
+  const waHref = () => {
+    const msg =
+      `${site.whatsappTexto}\n\n🥤 *Mi smoothie personalizado*\n` +
+      `Tamaño: ${size.label} (${max} ingredientes) — $${size.precio.toFixed(2)}\n` +
+      `Ingredientes (${selected.length}): ${selected.join(', ')}`
+    return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`
+  }
+
+  return (
+    <div className="mt-8 overflow-hidden rounded-[2rem] bg-white/10 ring-1 ring-white/15 backdrop-blur">
+      {/* Encabezado del constructor */}
+      <div className="border-b border-white/10 bg-white/5 px-6 py-5 sm:px-8">
+        <span className="inline-flex items-center gap-2 rounded-full bg-marigold/20 px-3 py-1 font-display text-xs font-600 uppercase tracking-wide text-marigold">
+          <Sparkle className="h-4 w-4" /> Personalízalo
+        </span>
+        <h4 className="mt-3 font-display text-2xl font-700 text-crema">Arma tu propio smoothie</h4>
+        <p className="mt-1 text-sm text-crema/75">
+          Toca los ingredientes que quieras y te preparamos tu mezcla ideal. Al terminar,
+          envíanos tu pedido por WhatsApp.
+        </p>
+      </div>
+
+      <div className="px-6 py-6 sm:px-8">
+        {/* Selección de tamaño */}
+        <div className="flex flex-col gap-3 sm:flex-row">
+          {['mediano', 'grande'].map((key) => {
+            const s = armaTuSmoothie[key]
+            const on = sizeKey === key
+            return (
+              <button
+                key={key}
+                onClick={() => changeSize(key)}
+                aria-pressed={on}
+                className={`flex-1 rounded-2xl border-2 px-4 py-3 text-left transition-all duration-200 ${
+                  on
+                    ? 'border-marigold bg-marigold/15'
+                    : 'border-white/15 bg-white/5 hover:border-white/30'
+                }`}
+              >
+                <span className="block font-display text-lg font-700 text-crema">
+                  {s.label} <span className="text-marigold">${s.precio.toFixed(2)}</span>
+                </span>
+                <span className="text-xs text-crema/70">Hasta {s.ingredientes} ingredientes</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Contador */}
+        <div className="mt-6 flex items-center justify-between">
+          <p className="font-display text-sm font-600 text-crema">
+            Ingredientes elegidos:{' '}
+            <span className={full ? 'text-marigold' : 'text-crema'}>
+              {selected.length} / {max}
+            </span>
+          </p>
+          {selected.length > 0 && (
+            <button
+              onClick={() => setSelected([])}
+              className="text-xs text-crema/60 underline transition-colors hover:text-crema"
+            >
+              Limpiar
+            </button>
+          )}
+        </div>
+
+        {/* Grupos de ingredientes seleccionables */}
+        <div className="mt-4 space-y-5">
+          {grupos.map((grupo) => (
+            <div key={grupo.titulo}>
+              <p className="font-display text-sm font-600 text-marigold">{grupo.titulo}</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {grupo.items.map((item) => {
+                  const on = selected.includes(item)
+                  const disabled = !on && full
+                  return (
+                    <button
+                      key={item}
+                      onClick={() => toggle(item)}
+                      disabled={disabled}
+                      aria-pressed={on}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm transition-all duration-200 ${
+                        on
+                          ? 'border-marigold bg-marigold font-600 text-vino-900'
+                          : disabled
+                            ? 'cursor-not-allowed border-white/10 bg-white/5 text-crema/30'
+                            : 'border-white/25 bg-white/5 text-crema hover:border-marigold/60 hover:bg-white/10'
+                      }`}
+                    >
+                      <span className="font-display leading-none">{on ? '✓' : '+'}</span>
+                      {item}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Botón de pedido (se activa al elegir ingredientes) */}
+        {canOrder ? (
+          <a
+            href={waHref()}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary mt-7 w-full justify-center py-4 text-base"
+          >
+            <WhatsApp className="h-5 w-5" />
+            Pedir mi smoothie ({selected.length}) por WhatsApp
+          </a>
+        ) : (
+          <div
+            className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-dashed border-crema/30 py-4 text-base font-500 text-crema/50"
+            aria-disabled="true"
+          >
+            <WhatsApp className="h-5 w-5" />
+            Selecciona ingredientes para pedir
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
