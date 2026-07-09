@@ -60,7 +60,7 @@ export const productos = [
     nombre: 'Barra Regular',
     desc: 'Avena y semillas horneadas con miel. La receta clásica SaBïa.',
     precio: 1.5,
-    img: '/img/barras-surtido.jpg',
+    img: '/img/barra-regular.jpg',
     badge: '100% natural',
   },
   {
@@ -69,7 +69,7 @@ export const productos = [
     nombre: 'Barra de Cacao al 70%',
     desc: 'Cacao ecuatoriano de intenso sabor, sin azúcar añadida refinada.',
     precio: 1.5,
-    img: '/img/barras-detalle.jpg',
+    img: '/img/barra-cacao.jpg',
     badge: '100% natural',
   },
   {
@@ -78,7 +78,7 @@ export const productos = [
     nombre: 'Barra de Ajonjolí con Coco',
     desc: 'Ajonjolí tostado y coco en hojuelas. Crujiente y aromática.',
     precio: 1.5,
-    img: '/img/barras-surtido.jpg',
+    img: '/img/barra-ajonjoli-coco.jpg',
     badge: '100% natural',
   },
 
@@ -133,30 +133,12 @@ export const productos = [
     badge: 'Probiótico',
   },
   {
-    id: 'kombucha-litro',
-    categoria: 'bebidas',
-    nombre: 'Té de Kombucha 1 litro',
-    desc: 'Té fermentado, burbujeante y probiótico. Presentación familiar.',
-    precio: 7.5,
-    img: '/img/kombucha.jpg',
-    badge: 'Probiótico',
-  },
-  {
-    id: 'kefir-500',
-    categoria: 'bebidas',
-    nombre: 'Yogurth de Kéfir 500ml',
-    desc: 'Bebida fermentada rica en probióticos. Cuida tu digestión.',
-    precio: 4,
-    img: '/img/kombucha.jpg',
-    badge: 'Probiótico',
-  },
-  {
     id: 'kefir-litro',
     categoria: 'bebidas',
     nombre: 'Kéfir 1 litro',
     desc: 'Bebida fermentada rica en probióticos. Presentación familiar.',
     precio: 8,
-    img: '/img/kombucha.jpg',
+    img: '/img/kefir.jpg',
     badge: 'Probiótico',
   },
 
@@ -167,8 +149,8 @@ export const productos = [
     nombre: 'Parfait',
     desc: 'Capas de yogurt, granola y fruta fresca. Dulce y ligero.',
     precio: 3.0,
-    img: '/img/granola-bolsa.jpg',
-    badge: 'Foto próximamente',
+    img: '/img/parfait.jpg',
+    badge: 'Postre',
   },
 ];
 
