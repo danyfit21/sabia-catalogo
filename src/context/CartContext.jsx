@@ -44,13 +44,14 @@ function reducer(state, action) {
       }
     }
     case 'clear':
-      return { ...state, items: [] }
+      return state.items.length === 0 ? state : { ...state, items: [] }
+    // Idempotentes: devolver el mismo objeto evita re-renders en cascada.
     case 'modo':
-      return { ...state, modo: action.modo }
+      return state.modo === action.modo ? state : { ...state, modo: action.modo }
     case 'open':
-      return { ...state, abierto: true }
+      return state.abierto ? state : { ...state, abierto: true }
     case 'close':
-      return { ...state, abierto: false }
+      return state.abierto ? { ...state, abierto: false } : state
     default:
       return state
   }
@@ -63,17 +64,9 @@ export function CartProvider({ children }) {
     abierto: false,
   })
 
-  const value = useMemo(() => {
-    const count = state.items.reduce((n, i) => n + i.cantidad, 0)
-    const total = state.items.reduce(
-      (s, i) => s + (i.precio || 0) * i.cantidad,
-      0,
-    )
-    return {
-      ...state,
-      count,
-      total,
-      sinPrecios: state.modo === 'productos',
+  // `dispatch` es estable, así que estas acciones nunca cambian de identidad.
+  const acciones = useMemo(
+    () => ({
       add: (item) => dispatch({ type: 'add', item }),
       remove: (key) => dispatch({ type: 'remove', key }),
       setQty: (key, cantidad) => dispatch({ type: 'setQty', key, cantidad }),
@@ -81,8 +74,21 @@ export function CartProvider({ children }) {
       setModo: (modo) => dispatch({ type: 'modo', modo }),
       open: () => dispatch({ type: 'open' }),
       close: () => dispatch({ type: 'close' }),
+    }),
+    [],
+  )
+
+  const value = useMemo(() => {
+    const count = state.items.reduce((n, i) => n + i.cantidad, 0)
+    const total = state.items.reduce((s, i) => s + (i.precio || 0) * i.cantidad, 0)
+    return {
+      ...state,
+      count,
+      total,
+      sinPrecios: state.modo === 'productos',
+      ...acciones,
     }
-  }, [state])
+  }, [state, acciones])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
