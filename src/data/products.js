@@ -211,8 +211,7 @@ export const menuBowls = [
     desc: 'Mango (por temporada), yogurt de kéfir, piña, coco, banana, miel (opcional).',
     precioMediano: 4.5,
     precioGrande: 5.5,
-    img: '/img/bowl-clasico.jpg',
-    fotoPendiente: true,
+    img: '/img/bowl-tropical-mango.jpg',
   },
   {
     id: 'bowl-choco-peanut',
@@ -220,8 +219,7 @@ export const menuBowls = [
     desc: 'Banana, mantequilla de maní, cacao en polvo, leche de almendras.',
     precioMediano: 5.0,
     precioGrande: 6.0,
-    img: '/img/bowl-acai-power.jpg',
-    fotoPendiente: true,
+    img: '/img/bowl-choco-peanut.jpg',
   },
   {
     id: 'bowl-berris-lover',
@@ -229,8 +227,7 @@ export const menuBowls = [
     desc: 'Mix de moras, arándanos, fresa, banana, yogurt de kéfir, semillas de chía, miel (opcional).',
     precioMediano: 4.5,
     precioGrande: 5.5,
-    img: '/img/bowl-acai-power.jpg',
-    fotoPendiente: true,
+    img: '/img/bowl-berris-lover.jpg',
   },
   {
     id: 'bowl-sunrise',
@@ -238,8 +235,7 @@ export const menuBowls = [
     desc: 'Maracuyá, fresas, banana, yogurt de kéfir.',
     precioMediano: 4.5,
     precioGrande: 5.5,
-    img: '/img/bowl-clasico.jpg',
-    fotoPendiente: true,
+    img: '/img/bowl-sunrise.jpg',
   },
 ];
 
@@ -289,15 +285,13 @@ export const menuSmoothies = [
     id: 'smoothie-spinach-crush',
     nombre: 'Spinach Crush',
     desc: 'Espinaca, aguacate, piña, mango, banana, yogurt de kéfir.',
-    img: '/img/smoothie-green-citrus.jpg',
-    fotoPendiente: true,
+    img: '/img/smoothie-spinach-crush.jpg',
   },
   {
     id: 'smoothie-digestiva-vida',
     nombre: 'Digestiva Vida',
     desc: 'Papaya, manzana, yogurt de kéfir, avena, banana.',
-    img: '/img/smoothie-stand-up.jpg',
-    fotoPendiente: true,
+    img: '/img/smoothie-digestiva-vida.jpg',
   },
 ];
 
@@ -343,8 +337,7 @@ export const menuTostadas = [
     nombre: 'Peanut Toast',
     desc: 'Pan de masa madre, miel, mantequilla de maní, semillas de chía, acompañada de fresas y banana.',
     precio: 4.0,
-    img: '/img/tostada-frutos-rojos.jpg',
-    fotoPendiente: true,
+    img: '/img/tostada-peanut.jpg',
   },
   {
     id: 'toast-mushrooms',
