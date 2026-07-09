@@ -116,24 +116,39 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Columna foto macro */}
+        {/* Columna foto de producto */}
         <motion.div
           style={{ y: yPhoto }}
-          initial={{ opacity: 0, scale: 0.9, rotate: -3 }}
+          initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.35, ease }}
-          className="relative mx-auto w-full max-w-md"
+          className="relative mx-auto w-full max-w-lg"
         >
           {/* Anillo decorativo girando */}
           <div className="absolute -inset-6 -z-10 animate-spinSlow rounded-full border-2 border-dashed border-marigold/30" />
-          <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl ring-1 ring-white/10">
+          {/* Resplandor cálido detrás de la foto */}
+          <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-marigold/20 blur-3xl" aria-hidden="true" />
+          <motion.div
+            initial={{ opacity: 0, scale: 1.08, filter: 'blur(16px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1.2, delay: 0.5, ease }}
+            className="relative overflow-hidden rounded-[2.5rem] shadow-2xl ring-1 ring-white/10"
+          >
             <img
-              src="/img/barras-surtido.jpg"
-              alt="Surtido de barras de cereal artesanales SaBïa sobre madera"
-              className="aspect-[4/5] w-full object-cover"
+              src="/img/hero-productos.jpg"
+              alt="Línea completa de productos SaBïa: granola, barras de cereal, mantequilla de maní, té de kombucha y miel sobre mesa de madera"
+              className="aspect-[16/10] w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-vino-900/40 to-transparent" />
-          </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-vino-900/45 via-transparent to-transparent" />
+            {/* Destello premium (una sola pasada al cargar) */}
+            <motion.div
+              initial={{ x: '-140%' }}
+              animate={{ x: '160%' }}
+              transition={{ delay: 1.5, duration: 1.15, ease: 'easeInOut' }}
+              className="pointer-events-none absolute inset-y-0 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent"
+              aria-hidden="true"
+            />
+          </motion.div>
 
           {/* Tarjeta flotante de precio */}
           <motion.div
