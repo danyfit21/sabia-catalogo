@@ -466,7 +466,17 @@ export const menuCafes = {
 // ============================================================================
 
 // Extras que se sugieren al final del pedido del local (añadibles en 1 toque).
-export const extrasUpsell = ['parfait', 'barra-regular', 'granola-regular'];
+// `conFoto: true` → se muestra como cuadrado con la imagen y el nombre encima.
+// El resto se muestra como chip de solo texto.
+export const extrasUpsell = [
+  { id: 'barra-cacao', conFoto: true },
+  { id: 'parfait', conFoto: true },
+  { id: 'kombucha-500', conFoto: true },
+  { id: 'barra-regular' },
+  { id: 'barra-ajonjoli-coco' },
+  { id: 'granola-regular' },
+  { id: 'granola-cacao' },
+];
 
 export const pedidoConfig = {
   // Entrega SOLO en estos 3 puntos (selector, sin GPS).

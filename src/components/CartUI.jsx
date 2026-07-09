@@ -98,11 +98,19 @@ export function CartDrawer() {
   const [detalle, setDetalle] = useState('')
   const [ultimoExtra, setUltimoExtra] = useState(null)
 
-  // Extras sugeridos (resueltos desde products.js).
+  // Extras sugeridos (resueltos desde products.js): unos con foto, otros solo texto.
   const extras = useMemo(
-    () => extrasUpsell.map((id) => productos.find((p) => p.id === id)).filter(Boolean),
+    () =>
+      extrasUpsell
+        .map((e) => {
+          const p = productos.find((prod) => prod.id === e.id)
+          return p ? { ...p, conFoto: !!e.conFoto } : null
+        })
+        .filter(Boolean),
     [],
   )
+  const extrasConFoto = extras.filter((e) => e.conFoto)
+  const extrasTexto = extras.filter((e) => !e.conFoto)
 
   // Bloquea scroll de fondo + cierra con Escape.
   useEffect(() => {
@@ -463,8 +471,45 @@ export function CartDrawer() {
                   {esLocal && (
                     <div>
                       <p className="font-display font-600 text-vino">¿Le sumamos algo rico?</p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {extras.map((p) => {
+
+                      {/* Destacados: cuadrado con foto + nombre */}
+                      <div className="mt-3 grid grid-cols-3 gap-2">
+                        {extrasConFoto.map((p) => {
+                          const ok = ultimoExtra === p.id
+                          return (
+                            <motion.button
+                              key={p.id}
+                              whileTap={{ scale: 0.94 }}
+                              onClick={() => agregarExtra(p)}
+                              className={`group relative aspect-square overflow-hidden rounded-2xl border-2 shadow-card transition-colors ${
+                                ok ? 'border-marigold' : 'border-transparent hover:border-marigold'
+                              }`}
+                              aria-label={`Añadir ${p.nombre}`}
+                            >
+                              <img
+                                src={p.img}
+                                alt=""
+                                loading="lazy"
+                                className="h-full w-full object-cover"
+                              />
+                              <span className="absolute inset-0 bg-gradient-to-t from-vino-900/85 via-vino-900/20 to-transparent" />
+                              {ok ? (
+                                <span className="absolute inset-0 grid place-items-center bg-marigold/90 font-display text-xs font-700 leading-tight text-vino-900">
+                                  ✓ Añadido
+                                </span>
+                              ) : (
+                                <span className="absolute inset-x-1 bottom-1.5 font-display text-[11px] font-700 leading-tight text-crema drop-shadow">
+                                  {p.nombre}
+                                </span>
+                              )}
+                            </motion.button>
+                          )
+                        })}
+                      </div>
+
+                      {/* Resto: chips de solo texto */}
+                      <div className="mt-2.5 flex flex-wrap gap-2">
+                        {extrasTexto.map((p) => {
                           const ok = ultimoExtra === p.id
                           return (
                             <motion.button
