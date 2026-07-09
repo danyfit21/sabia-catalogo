@@ -1,8 +1,10 @@
 import { Reveal } from './Decor'
-import { WhatsApp, Instagram, Facebook } from './Icons'
-import { site, waLink } from '../data/products'
+import { Bag, Instagram, Facebook } from './Icons'
+import { site } from '../data/products'
+import { useCart } from '../context/CartContext'
 
 export default function FinalContact() {
+  const cart = useCart()
   return (
     <section
       id="contacto"
@@ -18,20 +20,15 @@ export default function FinalContact() {
             <br /> <span className="text-marigold">y sentirte mejor?</span>
           </h2>
           <p className="mt-5 text-crema/80">
-            Haz tu pedido por WhatsApp o escríbenos en redes. Te respondemos con
-            la mejor energía.
+            Arma tu pedido aquí mismo, o escríbenos en redes. Te respondemos
+            con la mejor energía.
           </p>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a
-              href={waLink()}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary w-full sm:w-auto"
-            >
-              <WhatsApp className="h-5 w-5" />
-              Pedir por WhatsApp
-            </a>
+            <button onClick={cart.open} className="btn-primary w-full sm:w-auto">
+              <Bag className="h-5 w-5" />
+              Armar mi pedido
+            </button>
             <div className="flex gap-3">
               <a
                 href={site.instagram}

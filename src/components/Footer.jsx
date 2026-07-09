@@ -1,5 +1,5 @@
 import { Instagram, Facebook, WhatsApp } from './Icons'
-import { site, waLink } from '../data/products'
+import { site } from '../data/products'
 
 const nav = [
   { href: '#inicio', label: 'Inicio' },
@@ -68,7 +68,7 @@ export default function Footer() {
             </p>
             <div className="mt-5 flex gap-3">
               <a
-                href={waLink()}
+                href={`https://wa.me/${site.whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
                 className="grid h-11 w-11 place-items-center rounded-full bg-crema/10 transition-colors hover:bg-marigold hover:text-vino-900"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { WhatsApp } from './Icons'
-import { waLink } from '../data/products'
+import { Bag } from './Icons'
+import { useCart } from '../context/CartContext'
 
 const links = [
   { href: '#inicio', label: 'Inicio' },
@@ -14,6 +14,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const cart = useCart()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -61,15 +62,18 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <a
-              href={waLink()}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={cart.open}
               className="btn-primary hidden px-5 py-2.5 text-[15px] sm:inline-flex"
             >
-              <WhatsApp className="h-4 w-4" />
-              Pedir por WhatsApp
-            </a>
+              <Bag className="h-4 w-4" />
+              Tu pedido
+              {cart.count > 0 && (
+                <span className="grid h-5 min-w-5 place-items-center rounded-full bg-vino px-1 text-xs font-700 text-crema">
+                  {cart.count}
+                </span>
+              )}
+            </button>
 
             <button
               onClick={() => setOpen((o) => !o)}
@@ -120,16 +124,21 @@ export default function Navbar() {
                   </li>
                 ))}
                 <li>
-                  <a
-                    href={waLink()}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => setOpen(false)}
+                  <button
+                    onClick={() => {
+                      setOpen(false)
+                      cart.open()
+                    }}
                     className="btn-primary mt-2 w-full"
                   >
-                    <WhatsApp className="h-4 w-4" />
-                    Pedir por WhatsApp
-                  </a>
+                    <Bag className="h-4 w-4" />
+                    Tu pedido
+                    {cart.count > 0 && (
+                      <span className="grid h-5 min-w-5 place-items-center rounded-full bg-vino px-1 text-xs font-700 text-crema">
+                        {cart.count}
+                      </span>
+                    )}
+                  </button>
                 </li>
               </ul>
             </motion.div>

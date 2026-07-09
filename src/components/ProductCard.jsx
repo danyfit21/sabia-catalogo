@@ -1,7 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { WhatsApp } from './Icons'
-import { waLink } from '../data/products'
+import AddToCart from './AddToCart'
 
 // Card con tilt 3D suave + elevación + sombra de marca al hover.
 // forwardRef: AnimatePresence (mode="popLayout") necesita un ref al nodo DOM.
@@ -62,15 +61,12 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
         <h3 className="font-display text-xl font-600 leading-tight text-vino">{p.nombre}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-carbon/65">{p.desc}</p>
 
-        <a
-          href={waLink(p.nombre)}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-vino/5 py-3 font-display font-500 text-vino transition-all duration-300 hover:bg-vino hover:text-crema"
-        >
-          <WhatsApp className="h-4 w-4" />
-          Lo quiero
-        </a>
+        <div className="mt-5">
+          <AddToCart
+            item={{ id: p.id, nombre: p.nombre, img: p.img }}
+            precio={p.precio}
+          />
+        </div>
       </div>
     </motion.article>
   )

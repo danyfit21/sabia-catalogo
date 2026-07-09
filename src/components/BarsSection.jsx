@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Reveal } from './Decor'
 import { benefitIcons } from './Icons'
-import { beneficiosBarras, saboresBarras, waLink } from '../data/products'
+import { beneficiosBarras, saboresBarras } from '../data/products'
 
 export default function BarsSection() {
   return (
@@ -76,12 +76,7 @@ export default function BarsSection() {
           </div>
 
           <Reveal delay={0.2}>
-            <a
-              href={waLink('Barras de cereal SaBïa')}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-primary mt-9"
-            >
+            <a href="#catalogo" className="btn-primary mt-9">
               Quiero mis barras
             </a>
           </Reveal>

@@ -475,11 +475,13 @@ export const pedidoConfig = {
     'Hospital Santa Inés',
     'Colegio Benigno Malo',
   ],
-  // Modalidades del pedido del local, en primera persona.
-  modalidadesLocal: [
-    'Quiero comer en el local',
-    'Quiero pedir para llevar',
-    'Quiero entrega cerquita del local',
+  // Tipos de pedido, en primera persona. El `id` es el que entiende
+  // buildPedidoWA; el `label` es lo que ve el cliente.
+  tiposPedido: [
+    { id: 'comer', label: 'Quiero comer en el local' },
+    { id: 'llevar', label: 'Quiero pedir para llevar' },
+    { id: 'entrega', label: 'Quiero entrega cerquita del local' },
+    { id: 'productos', label: 'Quiero pedir productos SaBïa para mi negocio' },
   ],
   // Botón directo "Pruébalo todo" del flujo de pedido de productos.
   paqueteMuestra: {
@@ -498,63 +500,94 @@ export const pedidoConfig = {
 
 // ----------------------------------------------------------------------------
 // buildPedidoWA(pedido) → URL de wa.me con el mensaje del pedido ya armado.
+// ÚNICO generador de mensajes: clasifica según pedido.tipo.
 //
 // pedido = {
-//   tipo: 'productos' | 'local',
-//   nombre: string,                    // persona (ambos flujos)
-//   negocio?: string,                  // opcional, flujo 'productos'
-//   direccion?: string,                // flujo 'productos'
-//   modalidad?: string,                // flujo 'local' (una de modalidadesLocal)
-//   puntoEntrega?: string,             // flujo 'local' si es entrega cerquita
-//   items: [{ nombre, cantidad, tamano?, precio? }],
-//   extras?: [{ nombre, cantidad, precio? }],
-//   total?: number,                    // flujo 'local'
+//   tipo: 'comer' | 'llevar' | 'entrega' | 'productos',   // id de tiposPedido
+//   nombre: string,                     // obligatorio en todos los tipos
+//   negocio?: string,                   // tipo 'productos' (opcional)
+//   direccion?: string,                 // tipo 'productos'
+//   puntoEntrega?: string,              // tipo 'entrega' (uno de puntosEntrega)
+//   detalleEntrega?: string,            // tipo 'entrega' (aula/piso/oficina)
+//   items: [{ nombre, cantidad, tamano?, nota? }],
+//   extras?: [{ nombre, cantidad }],    // tipos del local
+//   total?: number,                     // tipos del local (nunca en 'productos')
 // }
 // ----------------------------------------------------------------------------
 export const buildPedidoWA = (pedido) => {
   const lineas = [];
 
-  if (pedido.tipo === 'productos') {
-    lineas.push('*PEDIDO DE PRODUCTOS – SaBïa*');
-    lineas.push('');
-    const quien = pedido.negocio
-      ? `${pedido.nombre} · ${pedido.negocio}`
-      : pedido.nombre;
-    lineas.push(`👤 ${quien}`);
-    if (pedido.direccion) lineas.push(`📍 ${pedido.direccion}`);
-    lineas.push('');
-    pedido.items.forEach((it) => {
-      lineas.push(`• ${it.cantidad} × ${it.nombre}`);
-    });
-    lineas.push('');
-    lineas.push('Cantidades listas, coordinamos precio y entrega 💛');
-  } else {
-    lineas.push('*NUEVO PEDIDO – SaBïa*');
-    lineas.push('');
-    if (pedido.modalidad) {
-      const punto =
-        pedido.puntoEntrega && pedido.modalidad.includes('entrega')
-          ? ` → ${pedido.puntoEntrega}`
-          : '';
-      lineas.push(`🛵 ${pedido.modalidad}${punto}`);
-    }
-    if (pedido.nombre) lineas.push(`👤 ${pedido.nombre}`);
-    lineas.push('');
-    pedido.items.forEach((it) => {
+  const pushItems = (items) => {
+    items.forEach((it) => {
       const tam = it.tamano ? ` (${it.tamano})` : '';
       lineas.push(`• ${it.cantidad} × ${it.nombre}${tam}`);
+      if (it.nota) lineas.push(`   ↳ ${it.nota}`);
     });
+  };
+
+  const pushExtrasYTotal = () => {
     if (pedido.extras?.length) {
       lineas.push('');
       lineas.push('✨ Extras:');
-      pedido.extras.forEach((ex) => {
-        lineas.push(`• ${ex.cantidad} × ${ex.nombre}`);
-      });
+      pedido.extras.forEach((ex) => lineas.push(`• ${ex.cantidad} × ${ex.nombre}`));
     }
     if (typeof pedido.total === 'number') {
       lineas.push('');
       lineas.push(`💰 Total: $${pedido.total.toFixed(2)}`);
     }
+  };
+
+  switch (pedido.tipo) {
+    case 'comer': {
+      lineas.push('*🍽️ PEDIDO – COMER EN EL LOCAL – SaBïa*');
+      lineas.push('');
+      lineas.push(`👤 ${pedido.nombre}`);
+      lineas.push('');
+      pushItems(pedido.items);
+      pushExtrasYTotal();
+      break;
+    }
+    case 'llevar': {
+      lineas.push('*🥡 PEDIDO – PARA LLEVAR – SaBïa*');
+      lineas.push('');
+      lineas.push(`👤 ${pedido.nombre}`);
+      lineas.push('');
+      pushItems(pedido.items);
+      pushExtrasYTotal();
+      break;
+    }
+    case 'entrega': {
+      lineas.push('*🛵 PEDIDO – ENTREGA CERCANA – SaBïa*');
+      lineas.push('');
+      const detalle = pedido.detalleEntrega ? ` · ${pedido.detalleEntrega}` : '';
+      lineas.push(`📍 ${pedido.puntoEntrega}${detalle}`);
+      lineas.push(`👤 ${pedido.nombre}`);
+      lineas.push('');
+      pushItems(pedido.items);
+      pushExtrasYTotal();
+      lineas.push('');
+      lineas.push('Sujeto a confirmación 💛');
+      break;
+    }
+    case 'productos': {
+      lineas.push('*📦 PEDIDO DE PRODUCTOS – SaBïa*');
+      lineas.push('');
+      const quien = pedido.negocio
+        ? `${pedido.nombre} · ${pedido.negocio}`
+        : pedido.nombre;
+      lineas.push(`👤 ${quien}`);
+      if (pedido.direccion) lineas.push(`📍 ${pedido.direccion}`);
+      lineas.push('');
+      // Sin precios ni total: el precio se conversa por WhatsApp.
+      pedido.items.forEach((it) => {
+        lineas.push(`• ${it.cantidad} × ${it.nombre}`);
+      });
+      lineas.push('');
+      lineas.push('Coordinamos precio y entrega por aquí 💛');
+      break;
+    }
+    default:
+      lineas.push(site.whatsappTexto);
   }
 
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(lineas.join('\n'))}`;

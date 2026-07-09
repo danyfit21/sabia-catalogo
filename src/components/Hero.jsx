@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Blob } from './Decor'
-import { WhatsApp, ArrowRight, Leaf } from './Icons'
-import { waLink, site } from '../data/products'
+import { Bag, ArrowRight, Leaf } from './Icons'
+import { site } from '../data/products'
 
 const ease = [0.22, 1, 0.36, 1]
 
@@ -105,12 +105,12 @@ export default function Hero() {
           </motion.p>
 
           <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-4">
-            <a href={waLink()} target="_blank" rel="noreferrer" className="btn-primary">
-              <WhatsApp className="h-5 w-5" />
-              Pedir por WhatsApp
+            <a href="#catalogo" className="btn-primary">
+              <Bag className="h-5 w-5" />
+              Quiero pedir
             </a>
-            <a href="#catalogo" className="btn-ghost">
-              Ver el catálogo
+            <a href="#menu-local" className="btn-ghost">
+              Ver el menú del local
               <ArrowRight className="h-5 w-5" />
             </a>
           </motion.div>

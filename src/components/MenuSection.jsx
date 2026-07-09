@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Reveal } from './Decor'
-import { ArrowRight, Sparkle, WhatsApp } from './Icons'
+import { ArrowRight, Bag, Sparkle } from './Icons'
+import AddToCart from './AddToCart'
+import { useCart } from '../context/CartContext'
 import {
   armaTuBowl,
   armaTuSmoothie,
@@ -10,8 +12,6 @@ import {
   menuSmoothies,
   menuTostadas,
   preciosSmoothieFijo,
-  site,
-  waLink,
 } from '../data/products'
 
 // Navegación rápida: salta a cada bloque del menú (útil sobre todo en móvil).
@@ -83,22 +83,14 @@ function BowlsBlock() {
           <div className="p-5">
             <h4 className="font-display text-lg font-600 text-vino">{b.nombre}</h4>
             <p className="mt-1.5 text-sm leading-snug text-carbon/65">{b.desc}</p>
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
-                Mediano ${b.precioMediano.toFixed(2)}
-              </span>
-              <span className="rounded-full bg-vino/5 px-3 py-1 text-xs font-600 text-vino">
-                Grande ${b.precioGrande.toFixed(2)}
-              </span>
-              <a
-                href={waLink(b.nombre)}
-                target="_blank"
-                rel="noreferrer"
-                className="ml-auto grid h-9 w-9 place-items-center rounded-full bg-vino text-crema transition-transform hover:scale-110"
-                aria-label={`Pedir ${b.nombre}`}
-              >
-                <WhatsApp className="h-4 w-4" />
-              </a>
+            <div className="mt-4">
+              <AddToCart
+                item={{ id: b.id, nombre: b.nombre, img: b.img }}
+                tamanos={[
+                  { label: 'Mediano', precio: b.precioMediano },
+                  { label: 'Grande', precio: b.precioGrande },
+                ]}
+              />
             </div>
           </div>
         </motion.article>
@@ -171,15 +163,15 @@ function SmoothiesBlock() {
 
             <div className="flex flex-1 flex-col p-5">
               <p className="flex-1 text-sm leading-relaxed text-carbon/70">{s.desc}</p>
-              <a
-                href={waLink(s.nombre)}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-vino py-3 font-display font-600 text-crema shadow-card transition-all duration-300 hover:bg-marigold hover:text-vino-900"
-              >
-                <WhatsApp className="h-5 w-5" />
-                Quiero uno
-              </a>
+              <div className="mt-5">
+                <AddToCart
+                  item={{ id: s.id, nombre: s.nombre, img: s.img }}
+                  tamanos={[
+                    { label: 'Mediano', precio: preciosSmoothieFijo.mediano },
+                    { label: 'Grande', precio: preciosSmoothieFijo.grande },
+                  ]}
+                />
+              </div>
             </div>
           </motion.article>
         ))}
@@ -194,13 +186,31 @@ function SmoothiesBlock() {
 
 // --- Constructor interactivo: arma tu propio smoothie ----------------------
 function SmoothieBuilder() {
+  const cart = useCart()
   const [sizeKey, setSizeKey] = useState('mediano')
   const [selected, setSelected] = useState([])
+  const [agregado, setAgregado] = useState(false)
+  const timer = useRef(null)
 
   const size = armaTuSmoothie[sizeKey]
   const max = size.ingredientes
   const full = selected.length >= max
   const canOrder = selected.length > 0
+
+  const agregarAlPedido = () => {
+    cart.add({
+      id: 'smoothie-arma-el-tuyo',
+      nombre: 'Mi smoothie personalizado',
+      img: null,
+      tamano: size.label,
+      precio: size.precio,
+      nota: selected.join(', '),
+    })
+    setSelected([])
+    clearTimeout(timer.current)
+    setAgregado(true)
+    timer.current = setTimeout(() => setAgregado(false), 1600)
+  }
 
   const grupos = [
     { titulo: 'Frutas', items: armaTuSmoothie.frutas },
@@ -221,14 +231,6 @@ function SmoothieBuilder() {
     setSelected((prev) => prev.slice(0, armaTuSmoothie[key].ingredientes))
   }
 
-  const waHref = () => {
-    const msg =
-      `${site.whatsappTexto}\n\n🥤 *Mi smoothie personalizado*\n` +
-      `Tamaño: ${size.label} (${max} ingredientes) — $${size.precio.toFixed(2)}\n` +
-      `Ingredientes (${selected.length}): ${selected.join(', ')}`
-    return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`
-  }
-
   return (
     <div className="mt-8 overflow-hidden rounded-[2rem] bg-white/10 ring-1 ring-white/15 backdrop-blur">
       {/* Encabezado del constructor */}
@@ -239,7 +241,7 @@ function SmoothieBuilder() {
         <h4 className="mt-3 font-display text-2xl font-700 text-crema">Arma tu propio smoothie</h4>
         <p className="mt-1 text-sm text-crema/75">
           Toca los ingredientes que quieras y te preparamos tu mezcla ideal. Al terminar,
-          envíanos tu pedido por WhatsApp.
+          agrégalo a tu pedido.
         </p>
       </div>
 
@@ -320,24 +322,31 @@ function SmoothieBuilder() {
           ))}
         </div>
 
-        {/* Botón de pedido (se activa al elegir ingredientes) */}
-        {canOrder ? (
-          <a
-            href={waHref()}
-            target="_blank"
-            rel="noreferrer"
+        {/* Botón (se activa al elegir ingredientes) → agrega al pedido */}
+        {agregado ? (
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-marigold py-4 font-display text-base font-700 text-vino-900"
+          >
+            ✓ ¡Agregado a tu pedido!
+          </motion.div>
+        ) : canOrder ? (
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={agregarAlPedido}
             className="btn-primary mt-7 w-full justify-center py-4 text-base"
           >
-            <WhatsApp className="h-5 w-5" />
-            Pedir mi smoothie ({selected.length}) por WhatsApp
-          </a>
+            <Bag className="h-5 w-5" />
+            Agregar mi smoothie ({selected.length}) a mi pedido
+          </motion.button>
         ) : (
           <div
             className="mt-7 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border border-dashed border-crema/30 py-4 text-base font-500 text-crema/50"
             aria-disabled="true"
           >
-            <WhatsApp className="h-5 w-5" />
-            Selecciona ingredientes para pedir
+            <Bag className="h-5 w-5" />
+            Selecciona ingredientes para agregar
           </div>
         )}
       </div>
@@ -376,17 +385,13 @@ function TostadasBlock() {
                 <h4 className="font-display text-lg font-600 text-vino">{t.nombre}</h4>
                 <p className="mt-1.5 text-sm leading-snug text-carbon/65">{t.desc}</p>
               </div>
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex items-center justify-between gap-2">
                 <span className="font-display text-lg font-700 text-vino">${t.precio.toFixed(2)}</span>
-                <a
-                  href={waLink(t.nombre)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="grid h-9 w-9 place-items-center rounded-full bg-vino text-crema transition-transform hover:scale-110"
-                  aria-label={`Pedir ${t.nombre}`}
-                >
-                  <WhatsApp className="h-4 w-4" />
-                </a>
+                <AddToCart
+                  variant="pill"
+                  item={{ id: t.id, nombre: t.nombre, img: t.img }}
+                  precio={t.precio}
+                />
               </div>
             </div>
           </motion.article>
@@ -395,28 +400,34 @@ function TostadasBlock() {
 
       <Reveal delay={0.1}>
         <div className="mt-6 grid gap-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:grid-cols-2 sm:p-8">
-          <div>
-            <h4 className="font-display text-lg font-600 text-marigold">Cafés calientes</h4>
-            <ul className="mt-3 space-y-2">
-              {menuCafes.calientes.map((c) => (
-                <li key={c.nombre} className="flex items-center justify-between text-sm text-crema/85">
-                  <span>{c.nombre}</span>
-                  <span className="font-display font-600 text-crema">${c.precio.toFixed(2)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-display text-lg font-600 text-marigold">Cafés fríos</h4>
-            <ul className="mt-3 space-y-2">
-              {menuCafes.frios.map((c) => (
-                <li key={c.nombre} className="flex items-center justify-between text-sm text-crema/85">
-                  <span>{c.nombre}</span>
-                  <span className="font-display font-600 text-crema">${c.precio.toFixed(2)}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {[
+            { titulo: 'Cafés calientes', items: menuCafes.calientes },
+            { titulo: 'Cafés fríos', items: menuCafes.frios },
+          ].map((grupo) => (
+            <div key={grupo.titulo}>
+              <h4 className="font-display text-lg font-600 text-marigold">{grupo.titulo}</h4>
+              <ul className="mt-3 space-y-2">
+                {grupo.items.map((c) => (
+                  <li
+                    key={c.id}
+                    className="flex items-center justify-between gap-3 text-sm text-crema/85"
+                  >
+                    <span>{c.nombre}</span>
+                    <span className="flex items-center gap-3">
+                      <span className="font-display font-600 text-crema">
+                        ${c.precio.toFixed(2)}
+                      </span>
+                      <AddToCart
+                        variant="icon"
+                        item={{ id: c.id, nombre: c.nombre, img: null }}
+                        precio={c.precio}
+                      />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </Reveal>
     </>
