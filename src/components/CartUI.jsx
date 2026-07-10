@@ -535,10 +535,11 @@ export function CartDrawer() {
                   {/* Aviso cálido: lo del menú del local no va en pedidos de negocio */}
                   {tipo === 'productos' && itemsSoloLocal.length > 0 && (
                     <p className="rounded-xl bg-vino/5 px-4 py-3 text-sm leading-relaxed text-carbon/75">
-                      {itemsSoloLocal.map((i) => i.nombre).join(', ')}{' '}
-                      {itemsSoloLocal.length === 1 ? 'se prepara' : 'se preparan'} al momento
-                      en el local, así que {itemsSoloLocal.length === 1 ? 'va' : 'van'} por un
-                      pedido normal 💛 Aquí solo enviamos los productos SaBïa.
+                      Estos son del menú del local, los dejamos fuera de este
+                      pedido:{' '}
+                      <span className="font-600 text-vino">
+                        {itemsSoloLocal.map((i) => i.nombre).join(', ')}
+                      </span>
                     </p>
                   )}
 
