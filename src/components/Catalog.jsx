@@ -90,28 +90,6 @@ export default function Catalog() {
             </AnimatePresence>
           </motion.div>
         </LayoutGroup>
-
-        {/* Gancho de descubrimiento hacia el Kit de Muestra */}
-        <Reveal delay={0.1}>
-          <div className="mt-12 flex justify-center">
-            <a
-              href="#pruebalo"
-              className="group inline-flex flex-col items-center gap-1 rounded-2xl px-6 py-3 text-center transition-colors hover:bg-vino/5"
-            >
-              <span className="font-display text-lg font-600 text-vino">
-                Hay una forma de probarlo todo 👀
-              </span>
-              <motion.span
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity }}
-                className="text-marigold"
-                aria-hidden="true"
-              >
-                ▾
-              </motion.span>
-            </a>
-          </div>
-        </Reveal>
       </div>
     </section>
   )

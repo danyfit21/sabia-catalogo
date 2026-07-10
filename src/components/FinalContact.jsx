@@ -1,6 +1,6 @@
 import { Reveal } from './Decor'
-import { Bag, Instagram, Facebook } from './Icons'
-import { site } from '../data/products'
+import { WhatsApp } from './Icons'
+import { waKitMuestra } from '../data/products'
 import { useCart } from '../context/CartContext'
 
 export default function FinalContact() {
@@ -20,35 +20,25 @@ export default function FinalContact() {
             <br /> <span className="text-marigold">y sentirte mejor?</span>
           </h2>
           <p className="mt-5 text-crema/80">
-            Arma tu pedido aquí mismo, o escríbenos en redes. Te respondemos
-            con la mejor energía.
+            ¿Quieres probar toda la línea SaBïa… o venderla en tu negocio?
           </p>
 
-          <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <button onClick={cart.open} className="btn-primary w-full sm:w-auto">
-              <Bag className="h-5 w-5" />
-              Armar mi pedido
+          <div className="mt-9 flex flex-col items-center justify-center gap-4">
+            <a
+              href={waKitMuestra()}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary w-full justify-center sm:w-auto"
+            >
+              <WhatsApp className="h-5 w-5" />
+              Quiero el Kit de Muestra 💛
+            </a>
+            <button
+              onClick={() => cart.openConTipo('productos')}
+              className="text-sm text-crema/60 underline decoration-crema/30 underline-offset-4 transition-colors hover:text-marigold hover:decoration-marigold"
+            >
+              Armar mi pedido de productos
             </button>
-            <div className="flex gap-3">
-              <a
-                href={site.instagram}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 rounded-full border-2 border-crema/30 px-5 py-3 font-display font-500 text-crema transition-colors hover:border-marigold hover:text-marigold"
-              >
-                <Instagram className="h-5 w-5" />
-                {site.instagramHandle}
-              </a>
-              <a
-                href={site.facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="grid h-12 w-12 place-items-center rounded-full border-2 border-crema/30 text-crema transition-colors hover:border-marigold hover:text-marigold"
-                aria-label="Facebook de SaBïa"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-            </div>
           </div>
         </Reveal>
       </div>

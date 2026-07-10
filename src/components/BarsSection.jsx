@@ -1,13 +1,11 @@
-import { motion } from 'framer-motion'
 import { Reveal } from './Decor'
-import { benefitIcons } from './Icons'
-import { beneficiosBarras, saboresBarras } from '../data/products'
+import { saboresBarras } from '../data/products'
 
 export default function BarsSection() {
   return (
     <section
       id="barras"
-      className="grain relative overflow-hidden bg-vino py-20 sm:py-28"
+      className="grain relative overflow-hidden bg-vino py-10 sm:py-14"
     >
       <div className="seed-pattern absolute inset-0 opacity-50" aria-hidden="true" />
       <div className="absolute -right-20 top-10 h-72 w-72 rounded-full bg-marigold/20 blur-3xl" aria-hidden="true" />
@@ -36,51 +34,19 @@ export default function BarsSection() {
           </div>
         </Reveal>
 
-        {/* Texto + beneficios */}
-        <div>
-          <Reveal>
-            <span className="font-script text-3xl text-marigold">energía que te acompaña</span>
-            <h2 className="heading-display mt-2 text-4xl text-crema sm:text-5xl">
-              Barras de cereal
-              <br />
-              <span className="text-marigold">100% naturales</span>
-            </h2>
-            <p className="mt-4 max-w-md text-crema/75">
-              Tres sabores artesanales, cero culpa. Avena, semillas y frutos
-              que te dan energía real para cualquier momento del día.
-            </p>
-          </Reveal>
-
-          <div className="mt-9 grid gap-4 sm:grid-cols-2">
-            {beneficiosBarras.map((b, i) => {
-              const Icon = benefitIcons[b.icon]
-              return (
-                <motion.div
-                  key={b.id}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="flex gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 backdrop-blur transition-colors hover:bg-white/10"
-                >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-marigold text-vino-900">
-                    <Icon className="h-6 w-6" />
-                  </span>
-                  <div>
-                    <h3 className="font-display font-600 text-crema">{b.titulo}</h3>
-                    <p className="mt-1 text-sm leading-snug text-crema/65">{b.desc}</p>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-
-          <Reveal delay={0.2}>
-            <a href="#catalogo" className="btn-primary mt-9">
-              Quiero mis barras
-            </a>
-          </Reveal>
-        </div>
+        {/* Texto */}
+        <Reveal>
+          <span className="font-script text-3xl text-marigold">energía que te acompaña</span>
+          <h2 className="heading-display mt-2 text-4xl text-crema sm:text-5xl">
+            Barras de cereal
+            <br />
+            <span className="text-marigold">100% naturales</span>
+          </h2>
+          <p className="mt-4 max-w-md text-crema/75">
+            Tres sabores artesanales, cero culpa. Avena, semillas y frutos
+            que te dan energía real para cualquier momento del día.
+          </p>
+        </Reveal>
       </div>
     </section>
   )
