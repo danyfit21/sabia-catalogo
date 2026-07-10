@@ -5,7 +5,6 @@ import { ArrowRight, Bag, Sparkle } from './Icons'
 import AddToCart from './AddToCart'
 import { useCart } from '../context/CartContext'
 import {
-  armaTuBowl,
   armaTuSmoothie,
   menuBowls,
   menuCafes,
@@ -96,28 +95,6 @@ function BowlsBlock() {
         </motion.article>
       ))}
     </div>
-  )
-}
-
-function ArmaBowl() {
-  return (
-    <Reveal delay={0.1}>
-      <div className="mt-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:p-8">
-        <h4 className="font-display text-xl font-600 text-crema">Arma tu propio bowl</h4>
-        <div className="mt-3 flex flex-wrap gap-3">
-          <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-            {armaTuBowl.mediano.label}: {armaTuBowl.mediano.desc}
-          </span>
-          <span className="rounded-full bg-marigold px-4 py-1.5 font-display text-sm font-700 text-vino-900">
-            {armaTuBowl.grande.label}: {armaTuBowl.grande.desc}
-          </span>
-        </div>
-        <p className="mt-4 text-sm text-crema/80">
-          Bases: {armaTuBowl.basesDesc}{' '}
-          <b className="text-marigold">+${armaTuBowl.precioExtra.toFixed(2)}</b>
-        </p>
-      </div>
-    </Reveal>
   )
 }
 
@@ -483,7 +460,6 @@ export default function MenuSection() {
           </BlockHeader>
           <div className="mt-10">
             <BowlsBlock />
-            <ArmaBowl />
           </div>
           <NextButton href="#menu-smoothies" label="Ver smoothies" />
         </div>
