@@ -99,7 +99,7 @@ export default function Catalog() {
               className="group inline-flex flex-col items-center gap-1 rounded-2xl px-6 py-3 text-center transition-colors hover:bg-vino/5"
             >
               <span className="font-display text-lg font-600 text-vino">
-                ¿Quieres probarlo todo? 👇
+                Hay una forma de probarlo todo 👀
               </span>
               <motion.span
                 animate={{ y: [0, 5, 0] }}
