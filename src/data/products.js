@@ -29,20 +29,8 @@ export const site = {
     'https://www.google.com/maps?q=La%20Esquina%20de%20las%20Artes%2C%20Av.%2012%20de%20Abril%20y%20Agust%C3%ADn%20Cueva%2C%20Cuenca%2C%20Ecuador&output=embed',
 };
 
-// Genera el enlace de WhatsApp para un producto concreto (o pedido general).
-export const waLink = (producto) => {
-  const base = `https://wa.me/${site.whatsapp}?text=`;
-  const msg = producto
-    ? `${site.whatsappTexto} *${producto}*`
-    : site.whatsappTexto;
-  return base + encodeURIComponent(msg);
-};
-
 // ============================================================================
-//  CATEGORÍAS
-//  - `categorias`: filtro de la sección "Para llevar" actual (NO tocar hasta
-//    que la UI del pedido esté lista — la usa Catalog.jsx).
-//  - `categoriasPedido`: filtro unificado del futuro sistema de pedidos.
+//  CATEGORÍAS — filtro de la sección "Para llevar" (la usa Catalog.jsx).
 // ============================================================================
 
 export const categorias = [
@@ -52,15 +40,6 @@ export const categorias = [
   { id: 'untables', label: 'Untables' },
   { id: 'bebidas', label: 'Bebidas' },
   { id: 'postres', label: 'Postres' },
-];
-
-export const categoriasPedido = [
-  { id: 'productos-sabia', label: 'Productos SaBïa' },
-  { id: 'bowls', label: 'Smoothie Bowls' },
-  { id: 'smoothies', label: 'Smoothies' },
-  { id: 'tostadas', label: 'Tostadas' },
-  { id: 'cafes', label: 'Cafés' },
-  { id: 'parfait', label: 'Parfait' },
 ];
 
 // ============================================================================
@@ -178,34 +157,6 @@ export const productos = [
     precio: 3.0,
     img: '/img/parfait.jpg',
     badge: 'Postre',
-  },
-];
-
-// --- Beneficios de las barras (sección editorial) --------------------------
-export const beneficiosBarras = [
-  {
-    id: 'energia',
-    titulo: 'Energía sostenida',
-    desc: 'Reponen energía antes o después de entrenar.',
-    icon: 'bolt',
-  },
-  {
-    id: 'saciedad',
-    titulo: 'Saciedad',
-    desc: 'Previenen picar entre horas gracias a su fibra.',
-    icon: 'leaf',
-  },
-  {
-    id: 'digestiva',
-    titulo: 'Salud digestiva',
-    desc: 'La fibra ayuda a mantener el tránsito regular.',
-    icon: 'belly',
-  },
-  {
-    id: 'practicidad',
-    titulo: 'Practicidad',
-    desc: 'Fáciles de llevar y consumir en cualquier lugar.',
-    icon: 'bag',
   },
 ];
 
@@ -331,31 +282,6 @@ export const menuSmoothies = [
     nombre: 'Digestiva Vida',
     desc: 'Papaya, manzana, yogurt de kéfir, avena, banana.',
     img: '/img/smoothie-digestiva-vida.jpg',
-  },
-];
-
-// Ítems "arma el tuyo" — para listarlos en el sistema de pedidos sin romper
-// las grillas actuales de bowls/smoothies (no tienen foto: img null → la UI
-// del pedido usará el fallback de marca).
-export const armaTuyoItems = [
-  {
-    id: 'bowl-arma-el-tuyo',
-    canal: 'local',
-    tipo: 'bowl',
-    nombre: 'Arma tu propio bowl',
-    desc: 'Mediano: 1 base + 3 toppings · Grande: 1 base + 5 toppings.',
-    precioPendiente: true,
-    img: null,
-  },
-  {
-    id: 'smoothie-arma-el-tuyo',
-    canal: 'local',
-    tipo: 'smoothie',
-    nombre: 'Arma tu propio smoothie',
-    desc: 'Mediano: 7 ingredientes · Grande: 9 ingredientes. Tú eliges la mezcla.',
-    precioMediano: 3.75,
-    precioGrande: 4.0,
-    img: null,
   },
 ];
 

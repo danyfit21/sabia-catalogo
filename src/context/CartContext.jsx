@@ -5,8 +5,8 @@ import { createContext, useContext, useMemo, useReducer } from 'react'
 //  Un ítem se identifica por id + tamaño (una Barra Regular y una Granola
 //  conviven; un bowl Mediano y el mismo bowl Grande son líneas distintas).
 //
-//  `modo`: 'local' (con precios) | 'productos' (sin precios — el flujo de
-//  pedido de productos oculta subtotales y total; el precio se conversa).
+//  El carrito no conoce el tipo de pedido: los precios se muestran siempre.
+//  Ocultarlos es decisión del resumen del checkout, según el tipo elegido.
 // ============================================================================
 
 const CartContext = createContext(null)
@@ -46,20 +46,13 @@ function reducer(state, action) {
     case 'clear':
       return state.items.length === 0 ? state : { ...state, items: [] }
     // Idempotentes: devolver el mismo objeto evita re-renders en cascada.
-    case 'modo':
-      return state.modo === action.modo ? state : { ...state, modo: action.modo }
     case 'open':
       return state.abierto ? state : { ...state, abierto: true }
     case 'close':
       return state.abierto ? { ...state, abierto: false } : state
     // Abre el drawer con un tipo de pedido ya elegido (desde el Kit de Muestra).
     case 'openTipo':
-      return {
-        ...state,
-        abierto: true,
-        preTipo: action.tipo,
-        modo: action.tipo === 'productos' ? 'productos' : 'local',
-      }
+      return { ...state, abierto: true, preTipo: action.tipo }
     case 'clearPreTipo':
       return state.preTipo == null ? state : { ...state, preTipo: null }
     default:
@@ -71,7 +64,6 @@ export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     items: [],
     preTipo: null,
-    modo: 'local',
     abierto: false,
   })
 
@@ -82,7 +74,6 @@ export function CartProvider({ children }) {
       remove: (key) => dispatch({ type: 'remove', key }),
       setQty: (key, cantidad) => dispatch({ type: 'setQty', key, cantidad }),
       clear: () => dispatch({ type: 'clear' }),
-      setModo: (modo) => dispatch({ type: 'modo', modo }),
       open: () => dispatch({ type: 'open' }),
       close: () => dispatch({ type: 'close' }),
       openConTipo: (tipo) => dispatch({ type: 'openTipo', tipo }),
@@ -94,13 +85,7 @@ export function CartProvider({ children }) {
   const value = useMemo(() => {
     const count = state.items.reduce((n, i) => n + i.cantidad, 0)
     const total = state.items.reduce((s, i) => s + (i.precio || 0) * i.cantidad, 0)
-    return {
-      ...state,
-      count,
-      total,
-      sinPrecios: state.modo === 'productos',
-      ...acciones,
-    }
+    return { ...state, count, total, ...acciones }
   }, [state, acciones])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

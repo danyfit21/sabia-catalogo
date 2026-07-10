@@ -143,11 +143,13 @@ export function CartDrawer() {
   const irATipo = () => setStep('tipo')
   const elegirTipo = (id) => {
     setTipo(id)
-    cart.setModo(id === 'productos' ? 'productos' : 'local')
     setStep('datos')
   }
 
   const esLocal = tipo && tipo !== 'productos'
+  // El precio del pedido para negocio se conversa por WhatsApp: el resumen
+  // lo omite. El carrito, en cambio, siempre muestra precios.
+  const sinPrecios = tipo === 'productos'
 
   // En el pedido para negocio solo viajan los productos de la línea SaBïa
   // (canal 'ambos'). Lo del menú del local se prepara al momento.
@@ -322,7 +324,7 @@ export function CartDrawer() {
                                 +
                               </button>
                             </div>
-                            {!cart.sinPrecios && typeof it.precio === 'number' && (
+                            {typeof it.precio === 'number' && (
                               <span className="font-display font-700 text-vino">
                                 ${(it.precio * it.cantidad).toFixed(2)}
                               </span>
@@ -335,12 +337,10 @@ export function CartDrawer() {
                 </ul>
 
                 <div className="border-t border-vino/10 bg-white/60 p-5">
-                  {!cart.sinPrecios && (
-                    <div className="mb-4 flex items-center justify-between font-display">
-                      <span className="text-lg font-600 text-carbon/70">Total</span>
-                      <span className="text-2xl font-700 text-vino">${cart.total.toFixed(2)}</span>
-                    </div>
-                  )}
+                  <div className="mb-4 flex items-center justify-between font-display">
+                    <span className="text-lg font-600 text-carbon/70">Total</span>
+                    <span className="text-2xl font-700 text-vino">${cart.total.toFixed(2)}</span>
+                  </div>
                   <button
                     onClick={irATipo}
                     className="btn-primary w-full justify-center py-4 text-base"
@@ -558,9 +558,9 @@ export function CartDrawer() {
                             <li key={it.key} className="flex justify-between gap-2">
                               <span>
                                 {it.cantidad} × {it.nombre}
-                                {it.tamano && !cart.sinPrecios && ` (${it.tamano})`}
+                                {it.tamano && !sinPrecios && ` (${it.tamano})`}
                               </span>
-                              {!cart.sinPrecios && typeof it.precio === 'number' && (
+                              {!sinPrecios && typeof it.precio === 'number' && (
                                 <span className="shrink-0 font-600 text-vino">
                                   ${(it.precio * it.cantidad).toFixed(2)}
                                 </span>
@@ -568,7 +568,7 @@ export function CartDrawer() {
                             </li>
                           ))}
                         </ul>
-                        {!cart.sinPrecios && (
+                        {!sinPrecios && (
                           <div className="mt-3 flex justify-between border-t border-vino/10 pt-3 font-display">
                             <span className="font-600 text-carbon/70">Total</span>
                             <span className="text-lg font-700 text-vino">
