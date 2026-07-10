@@ -2,18 +2,23 @@ import { useMemo, useState } from 'react'
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
 import ProductCard from './ProductCard'
 import { Eyebrow, Reveal } from './Decor'
+import { useCart } from '../context/CartContext'
 import { categorias, productos } from '../data/products'
 
 export default function Catalog() {
   const [activa, setActiva] = useState('todos')
+  const cart = useCart()
 
-  const visibles = useMemo(
-    () =>
-      activa === 'todos'
-        ? productos
-        : productos.filter((p) => p.categoria === activa),
-    [activa],
-  )
+  // Al armar un pedido para un negocio solo se ofrecen los productos de la
+  // línea SaBïa; lo que se prepara en el local queda fuera.
+  const modoNegocio = cart.modo === 'productos'
+
+  const visibles = useMemo(() => {
+    const base = modoNegocio
+      ? productos.filter((p) => p.canal === 'ambos')
+      : productos
+    return activa === 'todos' ? base : base.filter((p) => p.categoria === activa)
+  }, [activa, modoNegocio])
 
   return (
     <section id="catalogo" className="relative bg-crema-soft py-20 sm:py-28">
@@ -30,6 +35,24 @@ export default function Catalog() {
             en Cuenca.
           </p>
         </Reveal>
+
+        {/* Aviso cálido del modo "pedido para tu negocio" */}
+        {modoNegocio && (
+          <Reveal delay={0.05}>
+            <div className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-3 rounded-2xl bg-vino px-5 py-4 text-center sm:flex-row sm:text-left">
+              <p className="flex-1 text-sm leading-relaxed text-crema/85">
+                Estás armando un pedido para tu negocio: aquí ves solo la línea
+                SaBïa y el precio lo afinamos juntos por WhatsApp 💛
+              </p>
+              <button
+                onClick={() => cart.setModo('local')}
+                className="shrink-0 rounded-full bg-crema/10 px-4 py-2 font-display text-sm font-600 text-crema transition-colors hover:bg-marigold hover:text-vino-900"
+              >
+                Ver todo con precios
+              </button>
+            </div>
+          </Reveal>
+        )}
 
         {/* Filtros */}
         <Reveal delay={0.1}>
@@ -67,6 +90,28 @@ export default function Catalog() {
             </AnimatePresence>
           </motion.div>
         </LayoutGroup>
+
+        {/* Gancho de descubrimiento hacia el Kit de Muestra */}
+        <Reveal delay={0.1}>
+          <div className="mt-12 flex justify-center">
+            <a
+              href="#pruebalo"
+              className="group inline-flex flex-col items-center gap-1 rounded-2xl px-6 py-3 text-center transition-colors hover:bg-vino/5"
+            >
+              <span className="font-display text-lg font-600 text-vino">
+                ¿Quieres probarlo todo? 👇
+              </span>
+              <motion.span
+                animate={{ y: [0, 5, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+                className="text-marigold"
+                aria-hidden="true"
+              >
+                ▾
+              </motion.span>
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   )

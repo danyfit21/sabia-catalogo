@@ -2,6 +2,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ValuesStrip from './components/ValuesStrip'
 import Catalog from './components/Catalog'
+import KitSection from './components/KitSection'
 import BarsSection from './components/BarsSection'
 import MenuSection from './components/MenuSection'
 import StorySection from './components/StorySection'
@@ -20,6 +21,7 @@ export default function App() {
         <Hero />
         <ValuesStrip />
         <Catalog />
+        <KitSection />
         <SeedDivider from="#F7F1E3" to="#6E2251" />
         <BarsSection />
         <MenuSection />

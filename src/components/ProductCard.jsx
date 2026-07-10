@@ -1,6 +1,7 @@
 import { forwardRef, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import AddToCart from './AddToCart'
+import { useCart } from '../context/CartContext'
 
 // Card con tilt 3D suave + elevación + sombra de marca al hover.
 // forwardRef: AnimatePresence (mode="popLayout") necesita un ref al nodo DOM.
@@ -12,6 +13,7 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
     else if (forwardedRef) forwardedRef.current = node
   }
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 })
+  const { sinPrecios } = useCart()
 
   const onMove = (e) => {
     const el = ref.current
@@ -52,9 +54,11 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
             {p.badge}
           </span>
         )}
-        <span className="absolute right-3 top-3 rounded-full bg-marigold px-3 py-1 font-display text-sm font-700 text-vino-900 shadow">
-          ${p.precio.toFixed(2)}
-        </span>
+        {!sinPrecios && (
+          <span className="absolute right-3 top-3 rounded-full bg-marigold px-3 py-1 font-display text-sm font-700 text-vino-900 shadow">
+            ${p.precio.toFixed(2)}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">

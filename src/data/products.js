@@ -493,12 +493,21 @@ export const pedidoConfig = {
     { id: 'entrega', label: 'Quiero entrega cerquita del local' },
     { id: 'productos', label: 'Quiero pedir productos SaBïa para mi negocio' },
   ],
-  // Botón directo "Pruébalo todo" del flujo de pedido de productos.
+  // Kit de Muestra — única salida directa a WhatsApp fuera del carrito.
+  // SIN precio: se conversa por WhatsApp. No renderizar precio en la UI.
   paqueteMuestra: {
-    nombre: 'Paquete Prueba SaBïa',
-    precio: 37.5,
+    nombre: 'Kit de Muestra SaBïa',
+    precio: null,
     incluye: 'toda la línea SaBïa',
+    detalle: [
+      'Granola regular y de cacao',
+      'Barras: regular, cacao 70% y ajonjolí con coco',
+      'Mantequilla de maní y miel de abeja',
+      'Té de kombucha y yogurt de kéfir',
+    ],
     img: '/img/productos-linea.jpg',
+    mensajeWA:
+      'Hola SaBïa 👋 Quiero el Kit de Muestra con toda la línea de productos. ¿Me cuentas cómo funciona?',
   },
   // Horarios de atención (aplican a pedidos en local y entrega cerquita).
   horarios: {
@@ -524,6 +533,12 @@ export const pedidoConfig = {
 //   total?: number,                     // tipos del local (nunca en 'productos')
 // }
 // ----------------------------------------------------------------------------
+// Enlace del Kit de Muestra: invita a conversar, nunca menciona precio.
+export const waKitMuestra = () =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+    pedidoConfig.paqueteMuestra.mensajeWA,
+  )}`;
+
 export const buildPedidoWA = (pedido) => {
   const lineas = [];
 

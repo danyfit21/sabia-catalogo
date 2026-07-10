@@ -52,6 +52,16 @@ function reducer(state, action) {
       return state.abierto ? state : { ...state, abierto: true }
     case 'close':
       return state.abierto ? { ...state, abierto: false } : state
+    // Abre el drawer con un tipo de pedido ya elegido (desde el Kit de Muestra).
+    case 'openTipo':
+      return {
+        ...state,
+        abierto: true,
+        preTipo: action.tipo,
+        modo: action.tipo === 'productos' ? 'productos' : 'local',
+      }
+    case 'clearPreTipo':
+      return state.preTipo == null ? state : { ...state, preTipo: null }
     default:
       return state
   }
@@ -60,6 +70,7 @@ function reducer(state, action) {
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     items: [],
+    preTipo: null,
     modo: 'local',
     abierto: false,
   })
@@ -74,6 +85,8 @@ export function CartProvider({ children }) {
       setModo: (modo) => dispatch({ type: 'modo', modo }),
       open: () => dispatch({ type: 'open' }),
       close: () => dispatch({ type: 'close' }),
+      openConTipo: (tipo) => dispatch({ type: 'openTipo', tipo }),
+      clearPreTipo: () => dispatch({ type: 'clearPreTipo' }),
     }),
     [],
   )

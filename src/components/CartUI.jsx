@@ -125,22 +125,22 @@ export function CartDrawer() {
     }
   }, [cart.abierto, cart.close])
 
-  // Al cerrar, vuelve al inicio y restablece precios.
+  // Al cerrar, vuelve al inicio (el modo elegido se conserva).
   useEffect(() => {
-    if (!cart.abierto) {
-      setStep('cart')
-      cart.setModo('local')
-    }
-  }, [cart.abierto, cart.setModo])
+    if (!cart.abierto) setStep('cart')
+  }, [cart.abierto])
 
-  const irACart = () => {
-    setStep('cart')
-    cart.setModo('local')
-  }
-  const irATipo = () => {
-    setStep('tipo')
-    cart.setModo('local')
-  }
+  // Abierto desde el Kit de Muestra con un tipo ya elegido.
+  useEffect(() => {
+    if (cart.abierto && cart.preTipo) {
+      setTipo(cart.preTipo)
+      setStep('datos')
+      cart.clearPreTipo()
+    }
+  }, [cart.abierto, cart.preTipo, cart.clearPreTipo])
+
+  const irACart = () => setStep('cart')
+  const irATipo = () => setStep('tipo')
   const elegirTipo = (id) => {
     setTipo(id)
     cart.setModo(id === 'productos' ? 'productos' : 'local')
@@ -322,7 +322,7 @@ export function CartDrawer() {
                                 +
                               </button>
                             </div>
-                            {typeof it.precio === 'number' && (
+                            {!cart.sinPrecios && typeof it.precio === 'number' && (
                               <span className="font-display font-700 text-vino">
                                 ${(it.precio * it.cantidad).toFixed(2)}
                               </span>
@@ -335,10 +335,12 @@ export function CartDrawer() {
                 </ul>
 
                 <div className="border-t border-vino/10 bg-white/60 p-5">
-                  <div className="mb-4 flex items-center justify-between font-display">
-                    <span className="text-lg font-600 text-carbon/70">Total</span>
-                    <span className="text-2xl font-700 text-vino">${cart.total.toFixed(2)}</span>
-                  </div>
+                  {!cart.sinPrecios && (
+                    <div className="mb-4 flex items-center justify-between font-display">
+                      <span className="text-lg font-600 text-carbon/70">Total</span>
+                      <span className="text-2xl font-700 text-vino">${cart.total.toFixed(2)}</span>
+                    </div>
+                  )}
                   <button
                     onClick={irATipo}
                     className="btn-primary w-full justify-center py-4 text-base"
