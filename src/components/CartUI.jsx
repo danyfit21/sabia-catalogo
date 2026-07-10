@@ -585,6 +585,14 @@ export function CartDrawer() {
                       Atendemos {pedidoConfig.horarios.texto}
                     </p>
                   )}
+
+                  {esLocal && (
+                    <p className="rounded-xl bg-vino/5 px-4 py-3 text-center text-sm leading-relaxed text-carbon/75">
+                      {tipo === 'comer'
+                        ? 'Al enviar tu pedido, lo empezamos a preparar de inmediato — por eso ya no se puede cancelar 💛'
+                        : 'Al enviar tu pedido, lo tomamos en firme y empezamos a prepararlo 💛'}
+                    </p>
+                  )}
                 </div>
 
                 {/* Botón final único */}
@@ -596,14 +604,14 @@ export function CartDrawer() {
                       rel="noreferrer"
                       className="btn-primary w-full justify-center py-4 text-base"
                     >
-                      Enviar mi pedido a SaBïa
+                      {esLocal ? 'Confirmar y enviar mi pedido' : 'Enviar mi pedido a SaBïa'}
                     </a>
                   ) : (
                     <button
                       disabled
                       className="w-full cursor-not-allowed rounded-full bg-marigold/40 py-4 font-display text-base font-700 text-vino-900/50"
                     >
-                      Enviar mi pedido a SaBïa
+                      {esLocal ? 'Confirmar y enviar mi pedido' : 'Enviar mi pedido a SaBïa'}
                     </button>
                   )}
                   {!valido && (

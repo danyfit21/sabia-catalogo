@@ -550,6 +550,8 @@ export const buildPedidoWA = (pedido) => {
       lineas.push('');
       pushItems(pedido.items);
       pushExtrasYTotal();
+      lineas.push('');
+      lineas.push('✅ Pedido confirmado en firme — ya lo empezamos a preparar.');
       break;
     }
     case 'llevar': {
@@ -559,6 +561,8 @@ export const buildPedidoWA = (pedido) => {
       lineas.push('');
       pushItems(pedido.items);
       pushExtrasYTotal();
+      lineas.push('');
+      lineas.push('✅ Pedido en firme. Te avisamos cuando esté listo.');
       break;
     }
     case 'entrega': {
@@ -572,6 +576,7 @@ export const buildPedidoWA = (pedido) => {
       pushExtrasYTotal();
       lineas.push('');
       lineas.push('Sujeto a confirmación 💛');
+      lineas.push('✅ Pedido en firme. Te avisamos cuando esté listo.');
       break;
     }
     case 'productos': {
