@@ -38,8 +38,8 @@ export default {
         kraft: '#B07B4F',
       },
       fontFamily: {
-        display: ['Fredoka', 'system-ui', 'sans-serif'],
-        body: ['Poppins', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
+        body: ['Rubik', 'system-ui', 'sans-serif'],
         script: ['Caveat', 'cursive'],
       },
       fontWeight: {

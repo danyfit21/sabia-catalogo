@@ -37,7 +37,7 @@ export default function BarsSection() {
         {/* Texto */}
         <Reveal>
           <span className="font-script text-3xl text-marigold">energía que te acompaña</span>
-          <h2 className="heading-display mt-2 text-4xl text-crema sm:text-5xl">
+          <h2 className="heading-display italic mt-2 text-4xl text-crema sm:text-5xl">
             Barras de cereal
             <br />
             <span className="text-marigold">100% naturales</span>

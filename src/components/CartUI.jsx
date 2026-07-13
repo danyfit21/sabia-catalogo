@@ -548,7 +548,7 @@ export function CartDrawer() {
                     <p className="font-display font-600 text-vino">Tu pedido</p>
                     {itemsEnviables.length === 0 ? (
                       <p className="mt-2 text-sm text-carbon/60">
-                        Agrega productos SaBïa (barras, granola, untables o bebidas) para
+                        Agrega productos <span className="font-brand-accent text-vino">SaBïa</span> (barras, granola, untables o bebidas) para
                         enviar este pedido.
                       </p>
                     ) : (
@@ -617,7 +617,13 @@ export function CartDrawer() {
                   {!valido && (
                     <p className="mt-2 text-center text-xs text-carbon/50">
                       {tipo === 'productos' && itemsLinea.length === 0
-                        ? 'Agrega productos SaBïa para enviar este pedido'
+                        ? (
+                          <>
+                            Agrega productos{' '}
+                            <span className="font-brand-accent text-vino">SaBïa</span> para
+                            enviar este pedido
+                          </>
+                        )
                         : tipo === 'entrega' && !puntoEntrega
                           ? 'Elige un punto y escribe tu nombre para continuar'
                           : tipo === 'productos'

@@ -68,7 +68,7 @@ export default function Hero() {
 
           <motion.h1
             variants={item}
-            className="heading-display mt-6 text-5xl text-crema sm:text-6xl lg:text-7xl"
+            className="heading-display italic mt-6 text-5xl text-crema sm:text-6xl lg:text-7xl"
           >
             Comer sano{' '}
             <span className="relative whitespace-nowrap text-marigold">
@@ -100,7 +100,7 @@ export default function Hero() {
             variants={item}
             className="mt-5 max-w-md text-lg leading-relaxed text-crema/75"
           >
-            Barras, granola, bowls, tostadas y bebidas hechas con amor e
+            Barras, granola, bowls, tostadas de masa madre y bebidas hechas con amor e
             ingredientes frescos. La sabiduría de lo natural, en cada bocado.
           </motion.p>
 

@@ -23,7 +23,7 @@ export default function Footer() {
                 alt="Logo de SaBïa"
                 className="h-12 w-12 rounded-full ring-2 ring-marigold/40"
               />
-              <span className="font-display text-3xl font-600">
+              <span className="font-display italic text-3xl font-600">
                 Sa<span className="text-marigold">B</span>ïa
               </span>
             </a>
@@ -99,7 +99,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-crema/15 pt-6 text-sm text-crema/60 sm:flex-row">
-          <p>© {new Date().getFullYear()} SaBïa · Cuenca, Ecuador. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} <span className="font-brand-accent text-crema">SaBïa</span> · Cuenca, Ecuador. Todos los derechos reservados.</p>
           <p>Hecho con ♥ y la sabiduría de lo natural.</p>
         </div>
       </div>

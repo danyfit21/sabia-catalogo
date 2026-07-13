@@ -4,7 +4,7 @@ import { SeedMark } from './Icons'
 
 const pasos = [
   { n: '01', t: 'Ingredientes frescos', d: 'Elegimos lo natural y local, sin atajos ni aditivos.' },
-  { n: '02', t: 'Recetas artesanales', d: 'Hechas en pequeños lotes, cuidando cada detalle.' },
+  { n: '02', t: 'Recetas artesanales', d: 'Hechas en pequeños lotes, con la sabiduría de cuidar cada detalle.' },
   { n: '03', t: 'Hecho con amor', d: 'Para que comer sano se sienta como un gusto, no un sacrificio.' },
 ]
 
@@ -18,14 +18,14 @@ export default function StorySection() {
       <div className="container-sb relative z-10">
         <Reveal className="mx-auto max-w-3xl text-center">
           <Eyebrow>Nuestra historia</Eyebrow>
-          <h2 className="heading-display mt-5 text-4xl text-vino sm:text-5xl">
+          <h2 className="heading-display italic mt-5 text-4xl text-vino sm:text-5xl">
             La sabiduría de lo natural
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-carbon/70">
-            SaBïa nació en Cuenca con una idea simple y poderosa:{' '}
+            <span className="font-brand-accent text-vino">SaBïa</span> nació en Cuenca con una idea simple y poderosa:{' '}
             <span className="font-600 text-vino">comer sano no tiene que ser aburrido</span>.
-            Combinamos el conocimiento de lo natural con el sabor que nos hace
-            felices, en productos artesanales pensados para acompañarte cada día.
+            Combinamos la sabiduría de lo natural con el sabor que nos hace
+            felices, en productos artesanales pensados para nutrir cuerpo y alma, cada día.
           </p>
           <p className="mt-4 font-script text-4xl text-violeta">
             con ingredientes frescos y mucho amor

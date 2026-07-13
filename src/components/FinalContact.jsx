@@ -15,12 +15,12 @@ export default function FinalContact() {
 
       <div className="container-sb relative z-10">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <h2 className="heading-display text-4xl text-crema sm:text-5xl">
+          <h2 className="heading-display italic text-4xl text-crema sm:text-5xl">
             ¿List@ para comer rico
             <br /> <span className="text-marigold">y sentirte mejor?</span>
           </h2>
           <p className="mt-5 text-crema/80">
-            ¿Quieres probar toda la línea SaBïa… o venderla en tu negocio?
+            ¿Quieres probar toda la línea <span className="font-brand-accent text-crema">SaBïa</span>… o venderla en tu negocio?
           </p>
 
           <div className="mt-9 flex flex-col items-center justify-center gap-4">

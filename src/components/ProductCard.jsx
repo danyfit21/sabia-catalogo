@@ -45,6 +45,7 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
           alt={`${p.nombre} — ${p.desc}`}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          style={p.imgPos ? { objectPosition: `center ${p.imgPos}` } : undefined}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-vino-900/35 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         {p.badge && (

@@ -17,7 +17,7 @@ import {
 const jumps = [
   { href: '#menu-bowls', label: 'Bowls' },
   { href: '#menu-smoothies', label: 'Smoothies' },
-  { href: '#menu-tostadas', label: 'Tostadas & Café' },
+  { href: '#menu-tostadas', label: 'Tostadas de Masa Madre & Café' },
 ]
 
 // Encabezado decorado de cada sub-bloque del menú.
@@ -192,13 +192,20 @@ function SmoothieBuilder() {
   const grupos = [
     { titulo: 'Frutas', items: armaTuSmoothie.frutas },
     { titulo: 'Verduras', items: armaTuSmoothie.verduras },
+    { titulo: 'Líquidos', items: armaTuSmoothie.liquidos },
     { titulo: 'Otros', items: armaTuSmoothie.otros },
   ]
+  const limites = armaTuSmoothie.limites
 
-  const toggle = (item) => {
+  const toggle = (item, grupo) => {
     setSelected((prev) => {
       if (prev.includes(item)) return prev.filter((x) => x !== item)
       if (prev.length >= max) return prev
+      const limite = limites[grupo.titulo]
+      if (limite != null) {
+        const enGrupo = prev.filter((x) => grupo.items.includes(x)).length
+        if (enGrupo >= limite) return prev
+      }
       return [...prev, item]
     })
   }
@@ -268,17 +275,28 @@ function SmoothieBuilder() {
 
         {/* Grupos de ingredientes seleccionables */}
         <div className="mt-4 space-y-5">
-          {grupos.map((grupo) => (
+          {grupos.map((grupo) => {
+            const limite = limites[grupo.titulo]
+            const enGrupo = selected.filter((x) => grupo.items.includes(x)).length
+            const grupoLleno = limite != null && enGrupo >= limite
+            return (
             <div key={grupo.titulo}>
-              <p className="font-display text-sm font-600 text-marigold">{grupo.titulo}</p>
+              <p className="font-display text-sm font-600 text-marigold">
+                {grupo.titulo}
+                {limite != null && (
+                  <span className="ml-1.5 font-500 text-crema/50">
+                    ({enGrupo}/{limite})
+                  </span>
+                )}
+              </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {grupo.items.map((item) => {
                   const on = selected.includes(item)
-                  const disabled = !on && full
+                  const disabled = !on && (full || grupoLleno)
                   return (
                     <button
                       key={item}
-                      onClick={() => toggle(item)}
+                      onClick={() => toggle(item, grupo)}
                       disabled={disabled}
                       aria-pressed={on}
                       className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm transition-all duration-200 ${
@@ -296,7 +314,8 @@ function SmoothieBuilder() {
                 })}
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* Botón (se activa al elegir ingredientes) → agrega al pedido */}
@@ -427,14 +446,13 @@ export default function MenuSection() {
             <img src="/img/logo.png" alt="" className="h-5 w-5 rounded-full" />
             Menú del local · solo en SaBïa Bowls
           </span>
-          <h2 className="heading-display mt-5 text-4xl text-crema sm:text-5xl">
+          <h2 className="heading-display italic mt-5 text-4xl text-crema sm:text-5xl">
             Se prepara y se sirve
             <br /> aquí, fresco al momento
           </h2>
           <p className="mt-4 text-crema/80">
-            Bowls, smoothies, tostadas y café — todo hecho al pedido dentro de
-            La Esquina de las Artes, en Cuenca. No disponible para llevar
-            empacado.
+            Bowls, smoothies, tostadas de masa madre y café — Todo hecho en nuestro local en
+            Cuenca, disponible también para llevar.
           </p>
         </Reveal>
 
@@ -456,7 +474,7 @@ export default function MenuSection() {
         {/* BLOQUE 1 · BOWLS */}
         <div id="menu-bowls" className="scroll-mt-24 pt-16">
           <BlockHeader eyebrow="cucharada tras cucharada" titulo="Smoothie Bowls">
-            Una base de frutas sin añadidos donde combinas nutrientes y sabores.
+            Una base de frutas con yogurt de kéfir o leche de almendras donde combinas nutrientes y sabores.
           </BlockHeader>
           <div className="mt-10">
             <BowlsBlock />
@@ -473,12 +491,12 @@ export default function MenuSection() {
           <div className="mt-10">
             <SmoothiesBlock />
           </div>
-          <NextButton href="#menu-tostadas" label="Ver tostadas & café" />
+          <NextButton href="#menu-tostadas" label="Ver tostadas de masa madre & café" />
         </div>
 
         {/* BLOQUE 3 · TOSTADAS & CAFÉ */}
         <div id="menu-tostadas" className="scroll-mt-24 pt-20">
-          <BlockHeader eyebrow="antojitos para acompañar" titulo="Tostadas & Café">
+          <BlockHeader eyebrow="antojitos para acompañar" titulo="Tostadas de Masa Madre & Café">
             Pan de masa madre recién tostado y café de especialidad, caliente o
             frío.
           </BlockHeader>

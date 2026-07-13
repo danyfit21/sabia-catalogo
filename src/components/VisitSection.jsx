@@ -14,7 +14,7 @@ export default function VisitSection() {
           {/* Info */}
           <Reveal>
             <Eyebrow>Visítanos</Eyebrow>
-            <h2 className="heading-display mt-5 text-4xl text-vino sm:text-5xl">
+            <h2 className="heading-display italic mt-5 text-4xl text-vino sm:text-5xl">
               Te esperamos en
               <br /> La Esquina de las Artes
             </h2>

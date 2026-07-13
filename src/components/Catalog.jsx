@@ -20,7 +20,7 @@ export default function Catalog() {
       <div className="container-sb">
         <Reveal className="mx-auto max-w-2xl text-center">
           <Eyebrow>Para llevar</Eyebrow>
-          <h2 className="heading-display mt-5 text-4xl text-vino sm:text-5xl">
+          <h2 className="heading-display italic mt-5 text-4xl text-vino sm:text-5xl">
             Sabores que nutren,
             <br className="hidden sm:block" /> antojos que se cumplen
           </h2>
