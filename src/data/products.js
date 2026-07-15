@@ -388,9 +388,9 @@ export const menuCafes = {
   ],
   frios: [
     { id: 'cafe-brown-sugar-latte', canal: 'local', nombre: 'Brown Sugar Latte', precio: 3.5, img: null },
-    { id: 'cafe-honey-cinnamon-latte', canal: 'local', nombre: 'Honey-Cinnamon Latte', precio: 3.5, img: null },
+    { id: 'cafe-honey-cinnamon-latte', canal: 'local', nombre: 'Honey-Cinnamon Latte', precio: 3.5, img: '/img/cafe-honey-cinnamon-latte.jpg' },
     { id: 'cafe-iced-coffee', canal: 'local', nombre: 'Iced Coffee', precio: 3.5, img: null },
-    { id: 'cafe-iced-latte', canal: 'local', nombre: 'Iced Latte', precio: 3.5, img: null },
+    { id: 'cafe-iced-latte', canal: 'local', nombre: 'Iced Latte', precio: 3.5, img: '/img/cafe-iced-latte.jpg' },
   ],
 };
 

@@ -424,6 +424,21 @@ function TostadasBlock() {
               </ul>
             </div>
           ))}
+
+          <div className="flex justify-center gap-5 sm:col-span-2">
+            {[
+              { id: 'cafe-honey-cinnamon-latte', img: '/img/cafe-honey-cinnamon-latte.jpg', nombre: 'Honey-Cinnamon Latte' },
+              { id: 'cafe-iced-latte', img: '/img/cafe-iced-latte.jpg', nombre: 'Iced Latte' },
+            ].map((c) => (
+              <div key={c.id} className="relative aspect-square w-40 overflow-hidden rounded-2xl shadow-card sm:w-48">
+                <img src={c.img} alt={c.nombre} loading="lazy" className="h-full w-full object-cover" />
+                <span className="absolute inset-0 bg-gradient-to-t from-vino-900/85 via-vino-900/10 to-transparent" />
+                <span className="absolute inset-x-2 bottom-2 font-display text-sm font-700 leading-tight text-crema drop-shadow">
+                  {c.nombre}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </Reveal>
     </>
