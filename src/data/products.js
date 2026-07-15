@@ -77,7 +77,7 @@ export const productos = [
     nombre: 'Barra de Ajonjolí con Coco',
     desc: 'Receta regular añadido ajonjolí y coco fresco.',
     precio: 1.5,
-    img: '/img/barra-ajonjoli-coco-nueva.jpg',
+    img: '/img/barra-ajonjoli-coco-v2.jpg',
     badge: 'Sin azúcar añadida',
   },
 
