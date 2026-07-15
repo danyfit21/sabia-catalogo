@@ -395,7 +395,7 @@ function TostadasBlock() {
       </div>
 
       <Reveal delay={0.1}>
-        <div className="mt-6 grid gap-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:grid-cols-2 sm:p-8">
+        <div className="mt-6 grid grid-cols-1 gap-6 rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur sm:grid-cols-2 sm:p-8">
           {[
             { titulo: 'Cafés calientes', items: menuCafes.calientes },
             { titulo: 'Cafés fríos', items: menuCafes.frios },
