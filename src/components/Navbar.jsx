@@ -42,9 +42,7 @@ export default function Navbar() {
               alt="Logo de SaBïa"
               className="h-11 w-11 rounded-full ring-2 ring-marigold/40"
             />
-            <span className="font-display text-2xl font-600 text-crema">
-              Sa<span className="text-marigold">B</span>ïa
-            </span>
+            <img src="/img/sabia-text-logo.svg" alt="SaBïa" className="h-7 w-auto" />
           </a>
 
           <ul className="hidden items-center gap-1 lg:flex">

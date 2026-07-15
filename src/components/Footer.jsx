@@ -23,9 +23,7 @@ export default function Footer() {
                 alt="Logo de SaBïa"
                 className="h-12 w-12 rounded-full ring-2 ring-marigold/40"
               />
-              <span className="font-display italic text-3xl font-600">
-                Sa<span className="text-marigold">B</span>ïa
-              </span>
+              <img src="/img/sabia-text-logo.svg" alt="SaBïa" className="h-9 w-auto" />
             </a>
             <p className="mt-4 font-script text-3xl text-marigold">
               “{site.lemaPrincipal}”
