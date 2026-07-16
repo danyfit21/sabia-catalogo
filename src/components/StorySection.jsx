@@ -24,8 +24,9 @@ export default function StorySection() {
           <p className="mt-6 text-lg leading-relaxed text-carbon/70">
             <span className="font-brand-accent text-vino">SaBïa</span> nació en Cuenca con una idea simple y poderosa:{' '}
             <span className="font-600 text-vino">comer sano no tiene que ser aburrido</span>.
-            Combinamos la sabiduría de lo natural con el sabor que nos hace
-            felices, en productos artesanales pensados para nutrir cuerpo y alma, cada día.
+            Somos una marca creada para transmitir la importancia de cultivar el alma y el cuerpo
+            con nuevas experiencias, nuevos conceptos, que nos genera una riqueza interior
+            invaluable. Siempre podemos hacernos el tiempo para alimentarnos sabiamente.
           </p>
           <p className="mt-4 font-script text-4xl text-violeta">
             con ingredientes frescos y mucho amor
