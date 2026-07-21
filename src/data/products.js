@@ -24,9 +24,11 @@ export const site = {
   lugar: 'Dentro de La Esquina de las Artes',
   ciudad: 'Cuenca, Ecuador',
   referencia: 'Frente al Teatro Carlos Cueva Tamariz · Universidad de Cuenca',
-  // Embed de Google Maps (La Esquina de las Artes, Cuenca)
-  mapaEmbed:
-    'https://www.google.com/maps?q=La%20Esquina%20de%20las%20Artes%2C%20Av.%2012%20de%20Abril%20y%20Agust%C3%ADn%20Cueva%2C%20Cuenca%2C%20Ecuador&output=embed',
+  // Enlace oficial de Google Maps del negocio (botón "Cómo llegar").
+  mapsUrl:
+    'https://www.google.com/maps/place/SaB%C3%AFa+Bowls/@-2.9011005,-79.0080928,17z/data=!3m1!4b1!4m6!3m5!1s0x91cd1934b537a871:0x456ba24eb50c2a90!8m2!3d-2.9011005!4d-79.0080928!16s%2Fg%2F11nr7y1__2',
+  // Embed de Google Maps (coordenadas exactas de SaBïa Bowls, La Esquina de las Artes)
+  mapaEmbed: 'https://www.google.com/maps?q=-2.9011005,-79.0080928&z=17&output=embed',
 };
 
 // ============================================================================

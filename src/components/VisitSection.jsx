@@ -3,10 +3,6 @@ import { Pin, ArrowRight } from './Icons'
 import { site } from '../data/products'
 
 export default function VisitSection() {
-  const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    'La Esquina de las Artes, Av. 12 de Abril y Agustín Cueva, Cuenca, Ecuador',
-  )}`
-
   return (
     <section id="visitanos" className="relative bg-crema py-20 sm:py-28">
       <div className="container-sb">
@@ -55,7 +51,7 @@ export default function VisitSection() {
             </ul>
 
             <a
-              href={mapsHref}
+              href={site.mapsUrl}
               target="_blank"
               rel="noreferrer"
               className="btn-vino mt-8"
