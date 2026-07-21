@@ -12,8 +12,14 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
     else if (forwardedRef) forwardedRef.current = node
   }
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 })
+  // El tilt 3D es un efecto de mouse: en touch (Android incluido) no aporta
+  // nada y solo cuesta cómputo en cada toque, así que se omite por completo ahí.
+  const canHover = useRef(
+    typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches,
+  ).current
 
   const onMove = (e) => {
+    if (!canHover) return
     const el = ref.current
     if (!el) return
     const r = el.getBoundingClientRect()
@@ -31,12 +37,16 @@ const ProductCard = forwardRef(function ProductCard({ p }, forwardedRef) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       ref={setRefs}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
-      style={{
-        transform: `perspective(900px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
-        transformStyle: 'preserve-3d',
-      }}
+      onMouseMove={canHover ? onMove : undefined}
+      onMouseLeave={canHover ? reset : undefined}
+      style={
+        canHover
+          ? {
+              transform: `perspective(900px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+              transformStyle: 'preserve-3d',
+            }
+          : undefined
+      }
       className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-card ring-1 ring-vino/5 transition-shadow duration-300 hover:shadow-cardHover"
     >
       <div className="relative aspect-[4/3] overflow-hidden">

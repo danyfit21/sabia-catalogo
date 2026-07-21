@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url'
 import path from 'path'
+import plugin from 'tailwindcss/plugin.js'
 
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
@@ -77,5 +78,14 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // En pantallas táctiles (Android incluido) los estilos :hover se quedan
+    // "pegados" tras un toque porque no hay mouse que dispare mouseleave.
+    // Limitamos hover: a dispositivos con mouse real; en touch, whileTap
+    // (framer-motion) sigue dando la respuesta visual al tocar.
+    plugin(({ addVariant }) => {
+      addVariant('hover', '@media (hover: hover) and (pointer: fine) { &:hover }')
+      addVariant('group-hover', '@media (hover: hover) and (pointer: fine) { :merge(.group):hover & }')
+    }),
+  ],
 }

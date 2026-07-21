@@ -31,8 +31,8 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`transition-all duration-500 ${
           scrolled
-            ? 'bg-vino/85 shadow-[0_8px_30px_-12px_rgba(59,17,48,0.6)] backdrop-blur-xl'
-            : 'bg-vino/30 backdrop-blur-md'
+            ? 'bg-vino/85 shadow-[0_8px_30px_-12px_rgba(59,17,48,0.6)] backdrop-blur-lg'
+            : 'bg-vino/30 backdrop-blur-sm'
         }`}
       >
         <div className="container-sb flex items-center justify-between py-3">
