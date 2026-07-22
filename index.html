@@ -22,10 +22,26 @@
     <!-- Google Fonts: Bricolage Grotesque (display) · Rubik (cuerpo) · Caveat (script) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Carga no bloqueante: el CSS de fuentes se descarga en paralelo y se
+         aplica al terminar, en vez de detener el primer pintado (display=swap
+         ya evita texto invisible mientras tanto). -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:ital,opsz,wght@0,12..96,200..800;1,12..96,200..800&family=Rubik:ital,wght@0,300..900;1,300..900&family=Caveat:wght@500;600;700&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:ital,opsz,wght@0,12..96,200..800;1,12..96,200..800&family=Rubik:ital,wght@0,300..900;1,300..900&family=Caveat:wght@500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:ital,opsz,wght@0,12..96,200..800;1,12..96,200..800&family=Rubik:ital,wght@0,300..900;1,300..900&family=Caveat:wght@500;600;700&display=swap"
+      />
+    </noscript>
 
     <title>SaBïa — la sabiduría de lo natural</title>
   </head>
